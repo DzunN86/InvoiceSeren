@@ -1,5 +1,7 @@
 ﻿namespace Indotalent.Administration {
     export interface UserForm {
+        IsActive: Serenity.BooleanEditor;
+        IsTenantAdmin: Serenity.BooleanEditor;
         Username: Serenity.StringEditor;
         DisplayName: Serenity.StringEditor;
         Email: Serenity.EmailEditor;
@@ -7,6 +9,7 @@
         Password: Serenity.PasswordEditor;
         PasswordConfirm: Serenity.PasswordEditor;
         Source: Serenity.StringEditor;
+        TenantId: Serenity.LookupEditor;
     }
 
     export class UserForm extends Serenity.PrefixedContext {
@@ -20,19 +23,24 @@
                 UserForm.init = true;
 
                 var s = Serenity;
-                var w0 = s.StringEditor;
-                var w1 = s.EmailEditor;
-                var w2 = s.ImageUploadEditor;
-                var w3 = s.PasswordEditor;
+                var w0 = s.BooleanEditor;
+                var w1 = s.StringEditor;
+                var w2 = s.EmailEditor;
+                var w3 = s.ImageUploadEditor;
+                var w4 = s.PasswordEditor;
+                var w5 = s.LookupEditor;
 
                 Q.initFormType(UserForm, [
-                    'Username', w0,
-                    'DisplayName', w0,
-                    'Email', w1,
-                    'UserImage', w2,
-                    'Password', w3,
-                    'PasswordConfirm', w3,
-                    'Source', w0
+                    'IsActive', w0,
+                    'IsTenantAdmin', w0,
+                    'Username', w1,
+                    'DisplayName', w1,
+                    'Email', w2,
+                    'UserImage', w3,
+                    'Password', w4,
+                    'PasswordConfirm', w4,
+                    'Source', w1,
+                    'TenantId', w5
                 ]);
             }
         }

@@ -64,6 +64,8 @@ namespace Indotalent
             services.Configure<LocalTextPackages>(Configuration.GetSection(LocalTextPackages.SectionKey));
             services.Configure<ScriptBundlingOptions>(Configuration.GetSection(ScriptBundlingOptions.SectionKey));
             services.Configure<UploadSettings>(Configuration.GetSection(UploadSettings.SectionKey));
+            services.Configure<DemoOption>(Configuration.GetSection(DemoOption.SectionKey));
+            services.Configure<DefaultOptions>(Configuration.GetSection(DefaultOptions.SectionKey));
 
             services.Configure<Serenity.Extensions.EnvironmentSettings>(Configuration.GetSection(Serenity.Extensions.EnvironmentSettings.SectionKey));
 

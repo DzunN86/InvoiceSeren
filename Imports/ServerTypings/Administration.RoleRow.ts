@@ -2,6 +2,8 @@
     export interface RoleRow {
         RoleId?: number;
         RoleName?: string;
+        TenantId?: number;
+        TenantName?: string;
         InsertUserId?: number;
         InsertDate?: string;
         UpdateUserId?: number;
@@ -25,6 +27,8 @@
         export declare const enum Fields {
             RoleId = "RoleId",
             RoleName = "RoleName",
+            TenantId = "TenantId",
+            TenantName = "TenantName",
             InsertUserId = "InsertUserId",
             InsertDate = "InsertDate",
             UpdateUserId = "UpdateUserId",
