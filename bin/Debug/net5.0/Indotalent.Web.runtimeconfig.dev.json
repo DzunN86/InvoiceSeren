@@ -1,8 +1,0 @@
-{
-  "runtimeOptions": {
-    "additionalProbingPaths": [
-      "/home/anyaspyx/.dotnet/store/|arch|/|tfm|",
-      "/home/anyaspyx/.nuget/packages"
-    ]
-  }
-}
