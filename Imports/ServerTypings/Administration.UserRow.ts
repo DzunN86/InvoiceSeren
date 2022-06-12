@@ -1,0 +1,61 @@
+﻿namespace Indotalent.Administration {
+    export interface UserRow {
+        UserId?: number;
+        Username?: string;
+        Source?: string;
+        PasswordHash?: string;
+        PasswordSalt?: string;
+        DisplayName?: string;
+        Email?: string;
+        UserImage?: string;
+        LastDirectoryUpdate?: string;
+        TenantId?: number;
+        TenantName?: string;
+        IsActive?: number;
+        IsTenantAdmin?: boolean;
+        Password?: string;
+        PasswordConfirm?: string;
+        InsertUserId?: number;
+        InsertDate?: string;
+        UpdateUserId?: number;
+        UpdateDate?: string;
+    }
+
+    export namespace UserRow {
+        export const idProperty = 'UserId';
+        export const isActiveProperty = 'IsActive';
+        export const nameProperty = 'Username';
+        export const localTextPrefix = 'Administration.User';
+        export const lookupKey = 'Administration.User';
+
+        export function getLookup(): Q.Lookup<UserRow> {
+            return Q.getLookup<UserRow>('Administration.User');
+        }
+        export const deletePermission = 'Administration:Security';
+        export const insertPermission = 'Administration:Security';
+        export const readPermission = 'Administration:Security';
+        export const updatePermission = 'Administration:Security';
+
+        export declare const enum Fields {
+            UserId = "UserId",
+            Username = "Username",
+            Source = "Source",
+            PasswordHash = "PasswordHash",
+            PasswordSalt = "PasswordSalt",
+            DisplayName = "DisplayName",
+            Email = "Email",
+            UserImage = "UserImage",
+            LastDirectoryUpdate = "LastDirectoryUpdate",
+            TenantId = "TenantId",
+            TenantName = "TenantName",
+            IsActive = "IsActive",
+            IsTenantAdmin = "IsTenantAdmin",
+            Password = "Password",
+            PasswordConfirm = "PasswordConfirm",
+            InsertUserId = "InsertUserId",
+            InsertDate = "InsertDate",
+            UpdateUserId = "UpdateUserId",
+            UpdateDate = "UpdateDate"
+        }
+    }
+}
