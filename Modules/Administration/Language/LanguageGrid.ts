@@ -12,8 +12,22 @@
             super(container);
         }
 
-        protected getDefaultSortBy() {
-            return [LanguageRow.Fields.LanguageName];
+        protected getButtons() {
+            var buttons = super.getButtons();
+
+            buttons.push(Serenity.Extensions.ExcelExportHelper.createToolButton({
+                grid: this,
+                service: this.getService() + '/ListExcel',
+                onViewSubmit: () => this.onViewSubmit(),
+                separator: true
+            }));
+
+            buttons.push(Serenity.Extensions.PdfExportHelper.createToolButton({
+                grid: this,
+                onViewSubmit: () => this.onViewSubmit()
+            }));
+
+            return buttons;
         }
     }
 }

@@ -7,6 +7,8 @@ namespace Indotalent.Administration.Forms
     [BasedOnRow(typeof(Entities.UserRow), CheckNames = true)]
     public class UserForm
     {
+        public Boolean IsActive { get; set; }
+        public Boolean IsTenantAdmin { get; set; }
         public String Username { get; set; }
         public String DisplayName { get; set; }
         [EmailEditor]
@@ -18,5 +20,6 @@ namespace Indotalent.Administration.Forms
         public String PasswordConfirm { get; set; }
         [OneWay]
         public string Source { get; set; }
+        public Int32? TenantId { get; set; }
     }
 }

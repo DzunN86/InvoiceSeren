@@ -1,7 +1,7 @@
-﻿using Serenity.Data;
+﻿using Microsoft.AspNetCore.Mvc;
+using Serenity.Data;
 using Serenity.Services;
 using System.Data;
-using Microsoft.AspNetCore.Mvc;
 using MyRepository = Indotalent.Administration.Repositories.UserRoleRepository;
 using MyRow = Indotalent.Administration.Entities.UserRoleRow;
 

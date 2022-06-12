@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using MyRepository = Indotalent.Administration.Repositories.TranslationRepository;
 using Serenity.Abstractions;
 using Serenity.Services;
 using System;
+using MyRepository = Indotalent.Administration.Repositories.TranslationRepository;
 
 namespace Indotalent.Administration.Endpoints
 {

@@ -8,9 +8,11 @@ namespace Indotalent.Administration.Forms
     [BasedOnRow(typeof(Entities.RoleRow), CheckNames = true)]
     public class RoleColumns
     {
-        [EditLink, DisplayName("Db.Shared.RecordId"), AlignRight]
+        [EditLink, AlignRight]
         public Int32 RoleId { get; set; }
-        [EditLink, Width(300)]
+        [EditLink, Width(300), SortOrder(-1)]
         public String RoleName { get; set; }
+        [Width(200)]
+        public String TenantName { get; set; }
     }
 }

@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.DataProtection;
+﻿using Indotalent.Administration.Entities;
+using Indotalent.Settings;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.Extensions.Caching.Memory;
-using MyRow = Indotalent.Administration.Entities.UserRow;
-using Serenity.Extensions.Entities;
+using Microsoft.Extensions.Options;
 using Serenity;
 using Serenity.Abstractions;
 using Serenity.Data;
+using Serenity.Extensions.Entities;
 using Serenity.Services;
 using Serenity.Web.Providers;
 using System;
@@ -14,26 +16,31 @@ using System.Data;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
+using MyRow = Indotalent.Administration.Entities.UserRow;
 
 namespace Indotalent.Administration.Repositories
 {
     public partial class UserRepository : BaseRepository
     {
-        public UserRepository(IRequestContext context)
+        protected IUserRetrieveService UserRetrieveService { get; }
+        public UserRepository(IRequestContext context, IUserRetrieveService userRetrieveService, IOptions<DemoOption> demoOption)
             : base(context)
         {
+            UserRetrieveService = userRetrieveService ?? throw new ArgumentNullException(nameof(userRetrieveService));
+            var option = demoOption ?? throw new ArgumentNullException(nameof(demoOption));
+            IsPublicDemo = option.Value.IsPublicDemo;
         }
 
         private static MyRow.RowFields fld { get { return MyRow.Fields; } }
         public static bool IsPublicDemo { get; set; }
 
-        
+
 
         public static void CheckPublicDemo(int? userID)
         {
             if (userID == 1 && IsPublicDemo)
                 throw new ValidationException("Sorry, but no changes " +
-                    "are allowed in public demo on ADMIN user!"); 
+                    "are allowed in public demo on ADMIN user!");
         }
 
         public static bool IsValidPhone(string number)
@@ -44,32 +51,32 @@ namespace Indotalent.Administration.Repositories
 
         public SaveResponse Create(IUnitOfWork uow, SaveRequest<MyRow> request)
         {
-            return new MySaveHandler(Context).Process(uow, request, SaveRequestType.Create);
+            return new MySaveHandler(Context, UserRetrieveService).Process(uow, request, SaveRequestType.Create);
         }
 
         public SaveResponse Update(IUnitOfWork uow, SaveRequest<MyRow> request)
         {
-            return new MySaveHandler(Context).Process(uow, request, SaveRequestType.Update);
+            return new MySaveHandler(Context, UserRetrieveService).Process(uow, request, SaveRequestType.Update);
         }
 
         public DeleteResponse Delete(IUnitOfWork uow, DeleteRequest request)
         {
-            return new MyDeleteHandler(Context).Process(uow, request);
+            return new MyDeleteHandler(Context, UserRetrieveService).Process(uow, request);
         }
 
         public UndeleteResponse Undelete(IUnitOfWork uow, UndeleteRequest request)
         {
-            return new MyUndeleteHandler(Context).Process(uow, request);
+            return new MyUndeleteHandler(Context, UserRetrieveService).Process(uow, request);
         }
 
         public RetrieveResponse<MyRow> Retrieve(IDbConnection connection, RetrieveRequest request)
         {
-            return new MyRetrieveHandler(Context).Process(connection, request);
+            return new MyRetrieveHandler(Context, UserRetrieveService).Process(connection, request);
         }
 
         public ListResponse<MyRow> List(IDbConnection connection, ListRequest request)
         {
-            return new MyListHandler(Context).Process(connection, request);
+            return new MyListHandler(Context, UserRetrieveService).Process(connection, request);
         }
 
         public static string ValidateDisplayName(string displayName, ITextLocalizer localizer)
@@ -96,9 +103,11 @@ namespace Indotalent.Administration.Repositories
 
         private class MySaveHandler : SaveRequestHandler<MyRow>
         {
-            public MySaveHandler(IRequestContext context)
+            protected IUserRetrieveService UserRetrieveService { get; }
+            public MySaveHandler(IRequestContext context, IUserRetrieveService userRetrieve)
                  : base(context)
-            {
+            {               
+                UserRetrieveService = userRetrieve;
             }
 
             private string password;
@@ -174,7 +183,7 @@ namespace Indotalent.Administration.Repositories
                 return true;
             }
 
-            public static string ValidateUsername(IDbConnection connection, string username, int? existingUserId, 
+            public static string ValidateUsername(IDbConnection connection, string username, int? existingUserId,
                 ITextLocalizer localizer)
             {
                 username = username.TrimToNull();
@@ -197,6 +206,39 @@ namespace Indotalent.Administration.Repositories
                 return username;
             }
 
+            public static string ValidateEmail(IDbConnection connection, string email, int? existingUserId,
+                ITextLocalizer localizer)
+            {
+                email = email.TrimToNull();
+
+                if (email == null)
+                    throw DataValidation.RequiredError(fld.Email, localizer);
+
+                var existing = GetUser(connection,
+                    new Criteria(fld.Email) == email);
+
+                if (existing != null && existingUserId != existing.UserId)
+                    throw new ValidationError("UniqueViolation", "Email",
+                        "A user with same email exists. Please choose another!");
+
+                return email;
+            }
+
+            private void ValidateUserQuota()
+            {
+                var user = (UserDefinition)User.GetUserDefinition(UserRetrieveService);
+                var tenant = Connection.ById<TenantRow>(user.TenantId);
+                var maxUser = tenant.MaximumUser;
+                var tenantUsers = Connection.List<UserRow>(x => x.SelectTableFields().Where(UserRow.Fields.TenantId == user.TenantId));
+                var currentUserCount = tenantUsers.Count;
+
+                if (currentUserCount >= maxUser)
+                {
+                    throw new ValidationException($"Maximum users reached. Current: {currentUserCount} users. , Quota: {maxUser} users.");
+                }
+
+            }
+
             protected override void ValidateRequest()
             {
                 base.ValidateRequest();
@@ -211,15 +253,25 @@ namespace Indotalent.Administration.Repositories
                     if (Row.Username != Old.Username)
                         Row.Username = ValidateUsername(Connection, Row.Username, Old.UserId.Value, Localizer);
 
+                    if (Row.Email != Old.Email)
+                        Row.Email = ValidateEmail(Connection, Row.Email, Old.UserId.Value, Localizer);
+
                     if (Row.DisplayName != Old.DisplayName)
                         Row.DisplayName = ValidateDisplayName(Row.DisplayName, Localizer);
+
+                    var user = (UserDefinition)User.GetUserDefinition(UserRetrieveService);
+                    if (Old.TenantId != user.TenantId)
+                        Permissions.ValidatePermission(PermissionKeys.Tenant, Localizer);
                 }
 
                 if (IsCreate)
                 {
+                    ValidateUserQuota();
+
                     Row.Username = ValidateUsername(Connection, Row.Username, null, Localizer);
                     Row.DisplayName = ValidateDisplayName(Row.DisplayName, Localizer);
                     password = ValidatePassword(Row.Password, Localizer);
+                    Row.Email = ValidateEmail(Connection, Row.Email, null, Localizer);
                 }
             }
 
@@ -231,6 +283,13 @@ namespace Indotalent.Administration.Repositories
                 {
                     Row.Source = "site";
                     Row.IsActive = Row.IsActive ?? 1;
+
+                    if (!Permissions.HasPermission(PermissionKeys.Tenant) ||
+                        Row.TenantId == null)
+                    {
+                        var user = (UserDefinition)User.GetUserDefinition(UserRetrieveService);
+                        Row.TenantId = user.TenantId;
+                    }
                 }
 
                 if (IsCreate || !Row.Password.IsEmptyOrNull())
@@ -244,6 +303,11 @@ namespace Indotalent.Administration.Repositories
             protected override void AfterSave()
             {
                 base.AfterSave();
+
+                if (this.IsCreate && Row.IsTenantAdmin.Value && Permissions.HasPermission(PermissionKeys.Tenant))
+                {                    
+                    MultiTenantHelper.GenerateDefaultTenantAdminPermission(Row.UserId.Value, this.Connection);                    
+                }
 
                 Cache.InvalidateOnCommit(UnitOfWork, fld);
             }
@@ -262,9 +326,11 @@ namespace Indotalent.Administration.Repositories
 
         private class MyDeleteHandler : DeleteRequestHandler<MyRow>
         {
-            public MyDeleteHandler(IRequestContext context)
+            protected IUserRetrieveService UserRetrieveService { get; }
+            public MyDeleteHandler(IRequestContext context, IUserRetrieveService userRetrieveService)
                  : base(context)
             {
+                UserRetrieveService = userRetrieveService ?? throw new ArgumentNullException(nameof(userRetrieveService));
             }
 
             protected override void ValidateRequest()
@@ -272,6 +338,28 @@ namespace Indotalent.Administration.Repositories
                 base.ValidateRequest();
 
                 CheckPublicDemo(Row.UserId);
+
+                var user = (UserDefinition)User.GetUserDefinition(UserRetrieveService);
+                if (Row.TenantId != user.TenantId)
+                    Permissions.ValidatePermission(PermissionKeys.Tenant, Localizer);
+
+                if (Row.UserId == user.UserId)
+                {
+                    throw new ValidationException("Self delete is not allowed, please contact your admin.");
+                }
+
+                if (Row.IsTenantAdmin == true)
+                {
+                    if (!Permissions.HasPermission(PermissionKeys.Tenant))
+                    {
+                        throw new ValidationException("Company admin deletion is not allowed, please contact support.");
+                    }
+                }
+
+                if (Row.UserId == 1)
+                {
+                    throw new ValidationException("Root admin deletion is not allowed, please contact your boss.");
+                }
             }
 
             protected override void OnBeforeDelete()
@@ -292,27 +380,58 @@ namespace Indotalent.Administration.Repositories
             }
         }
 
-        private class MyUndeleteHandler : UndeleteRequestHandler<MyRow> 
-        { 
-            public MyUndeleteHandler(IRequestContext context)
+        private class MyUndeleteHandler : UndeleteRequestHandler<MyRow>
+        {
+            protected IUserRetrieveService UserRetrieveService { get; }
+            public MyUndeleteHandler(IRequestContext context, IUserRetrieveService userRetrieveService)
                  : base(context)
             {
+                UserRetrieveService = userRetrieveService ?? throw new ArgumentNullException(nameof(userRetrieveService));
+            }
+
+            protected override void ValidateRequest()
+            {
+                base.ValidateRequest();
+
+                var user = (UserDefinition)User.GetUserDefinition(UserRetrieveService);
+                if (Row.TenantId != user.TenantId)
+                    Permissions.ValidatePermission(PermissionKeys.Tenant, Localizer);
             }
         }
 
         private class MyRetrieveHandler : RetrieveRequestHandler<MyRow>
         {
-            public MyRetrieveHandler(IRequestContext context)
+            protected IUserRetrieveService UserRetrieveService { get; }
+            public MyRetrieveHandler(IRequestContext context, IUserRetrieveService userRetrieveService)
                  : base(context)
             {
+                UserRetrieveService = userRetrieveService ?? throw new ArgumentNullException(nameof(userRetrieveService));
+            }
+            protected override void PrepareQuery(SqlQuery query)
+            {
+                base.PrepareQuery(query);
+
+                var user = (UserDefinition)User.GetUserDefinition(UserRetrieveService);
+                if (!Permissions.HasPermission(PermissionKeys.Tenant))
+                    query.Where(fld.TenantId == user.TenantId);
             }
         }
 
         private class MyListHandler : ListRequestHandler<MyRow>
         {
-            public MyListHandler(IRequestContext context)
+            protected IUserRetrieveService UserRetrieveService { get; }
+            public MyListHandler(IRequestContext context, IUserRetrieveService userRetrieveService)
                  : base(context)
             {
+                UserRetrieveService = userRetrieveService ?? throw new ArgumentNullException(nameof(userRetrieveService));
+            }
+            protected override void ApplyFilters(SqlQuery query)
+            {
+                base.ApplyFilters(query);
+
+                var user = (UserDefinition)User.GetUserDefinition(UserRetrieveService);
+                if (!Permissions.HasPermission(PermissionKeys.Tenant))
+                    query.Where(fld.TenantId == user.TenantId);
             }
         }
     }

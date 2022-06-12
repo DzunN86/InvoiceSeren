@@ -1,7 +1,7 @@
-﻿using Serenity.Data;
+﻿using Microsoft.AspNetCore.Mvc;
+using Serenity.Data;
 using Serenity.Services;
 using System.Data;
-using Microsoft.AspNetCore.Mvc;
 using MyRepository = Indotalent.Administration.Repositories.RolePermissionRepository;
 using MyRow = Indotalent.Administration.Entities.RolePermissionRow;
 
@@ -16,7 +16,7 @@ namespace Indotalent.Administration.Endpoints
         {
             return new MyRepository(Context).Update(uow, request);
         }
- 
+
         public RolePermissionListResponse List(IDbConnection connection, RolePermissionListRequest request)
         {
             return new MyRepository(Context).List(connection, request);

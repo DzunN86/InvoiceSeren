@@ -18,7 +18,7 @@ namespace Indotalent.Administration.Endpoints
         {
             return new MyRepository(Context).Update(uow, request);
         }
- 
+
         public ListResponse<MyRow> List(IDbConnection connection, UserPermissionListRequest request)
         {
             return new MyRepository(Context).List(connection, request);

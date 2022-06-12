@@ -1,17 +1,17 @@
-﻿using Microsoft.Extensions.Caching.Memory;
+﻿using Indotalent.Administration.Entities;
+using Indotalent.Administration.Repositories;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using Serenity;
 using Serenity.Abstractions;
 using Serenity.Data;
-using Indotalent.Administration.Entities;
-using Indotalent.Administration.Repositories;
 using System;
 
 namespace Indotalent.Administration
 {
     public class UserPasswordValidator : IUserPasswordValidator
     {
-        public UserPasswordValidator(ITwoLevelCache cache, ISqlConnections sqlConnections, IUserRetrieveService userRetriever, 
+        public UserPasswordValidator(ITwoLevelCache cache, ISqlConnections sqlConnections, IUserRetrieveService userRetriever,
             ILogger<UserPasswordValidator> log = null, IDirectoryService directoryService = null)
         {
             Cache = cache ?? throw new ArgumentNullException(nameof(cache));

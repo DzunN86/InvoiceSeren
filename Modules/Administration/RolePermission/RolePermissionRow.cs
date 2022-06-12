@@ -38,7 +38,8 @@ namespace Indotalent.Administration.Entities
         {
             get => fields.RoleRoleName[this];
             set => fields.RoleRoleName[this] = value;
-        }
+        }
+
         public RolePermissionRow()
         {
         }

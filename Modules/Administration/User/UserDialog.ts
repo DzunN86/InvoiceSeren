@@ -74,5 +74,12 @@
             this.form.PasswordConfirm.element.toggleClass('required', this.isNew())
                 .closest('.field').find('sup').toggle(this.isNew());
         }
+
+        protected getPropertyItems() {
+            var items = super.getPropertyItems();
+            if (!Q.Authorization.hasPermission("Administration:Tenant"))
+                items = items.filter(x => x.name != UserRow.Fields.TenantId && x.name != UserRow.Fields.IsActive && x.name != UserRow.Fields.IsTenantAdmin);
+            return items;
+        }
     }
 }

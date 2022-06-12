@@ -1,5 +1,5 @@
-﻿using Serenity.Web;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Serenity.Web;
 
 namespace Indotalent.Administration.Pages
 {

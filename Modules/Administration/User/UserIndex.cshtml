@@ -3,6 +3,14 @@
     ViewData["Title"] = "User";
 }
 
+@section Head{
+    <style>
+        #GridDiv > div.grid-toolbar.s-Serenity-Toolbar.s-Toolbar.clearfix > div.s-ToggleButton.s-IncludeDeletedToggle {
+            display: none;
+        }
+    </style>
+}
+
 <div id="GridDiv"></div>
 
 <script type="text/javascript">

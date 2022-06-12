@@ -1,7 +1,11 @@
-﻿using Serenity.Data;
+﻿using Microsoft.AspNetCore.Mvc;
+using Serenity.Data;
+using Serenity.Reporting;
 using Serenity.Services;
+using Serenity.Web;
+using System;
 using System.Data;
-using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
 using MyRepository = Indotalent.Administration.Repositories.LanguageRepository;
 using MyRow = Indotalent.Administration.Entities.LanguageRow;
 
@@ -22,7 +26,7 @@ namespace Indotalent.Administration.Endpoints
         {
             return new MyRepository(Context).Update(uow, request);
         }
- 
+
         [HttpPost, AuthorizeDelete(typeof(MyRow))]
         public DeleteResponse Delete(IUnitOfWork uow, DeleteRequest request)
         {
@@ -37,6 +41,15 @@ namespace Indotalent.Administration.Endpoints
         public ListResponse<MyRow> List(IDbConnection connection, ListRequest request)
         {
             return new MyRepository(Context).List(connection, request);
+        }
+
+        public FileContentResult ListExcel(IDbConnection connection, ListRequest request,
+            [FromServices] IExcelExporter exporter)
+        {
+            var data = List(connection, request).Entities;
+            var bytes = exporter.Export(data, typeof(Forms.LanguageColumns), request.ExportColumns);
+            return ExcelContentResult.Create(bytes, "LanguageList_" +
+                DateTime.Now.ToString("yyyyMMdd_HHmmss", CultureInfo.InvariantCulture) + ".xlsx");
         }
     }
 }

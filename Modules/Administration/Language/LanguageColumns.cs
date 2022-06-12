@@ -9,7 +9,7 @@ namespace Indotalent.Administration.Forms
     {
         [EditLink]
         public String LanguageId { get; set; }
-        [EditLink]
+        [EditLink, SortOrder(-1)]
         public String LanguageName { get; set; }
     }
 }

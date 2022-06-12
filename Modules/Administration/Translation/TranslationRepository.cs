@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Indotalent.Administration.Entities;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Linq;
 using Serenity;
@@ -8,7 +9,6 @@ using Serenity.Localization;
 using Serenity.Navigation;
 using Serenity.Services;
 using Serenity.Web;
-using Indotalent.Administration.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -24,7 +24,7 @@ namespace Indotalent.Administration.Repositories
         protected ILocalTextRegistry LocalTextRegistry { get; }
         protected ITypeSource TypeSource { get; }
 
-        public TranslationRepository(IRequestContext context, IWebHostEnvironment hostEnvironment, 
+        public TranslationRepository(IRequestContext context, IWebHostEnvironment hostEnvironment,
             ILocalTextRegistry localTextRegistry, ITypeSource typeSource)
              : base(context)
         {
@@ -35,7 +35,7 @@ namespace Indotalent.Administration.Repositories
 
         public static string GetUserTextsFilePath(IWebHostEnvironment hostEnvironment, string languageID)
         {
-            return Path.Combine(hostEnvironment.ContentRootPath, "App_Data", "texts", 
+            return Path.Combine(hostEnvironment.ContentRootPath, "App_Data", "texts",
                 "user.texts." + (languageID.TrimToNull() ?? "invariant") + ".json");
         }
 
@@ -45,10 +45,10 @@ namespace Indotalent.Administration.Repositories
 
             var availableKeys = GetAllAvailableLocalTextKeys();
             var targetLanguageID = request.TargetLanguageID.TrimToNull();
-            
+
             var customTranslations = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
-            var textsFilePath = GetUserTextsFilePath(HostEnvironment, targetLanguageID);           
+            var textsFilePath = GetUserTextsFilePath(HostEnvironment, targetLanguageID);
             if (File.Exists(textsFilePath))
             {
                 var json = JSON.Parse<Dictionary<string, JToken>>(File.ReadAllText(textsFilePath));
@@ -66,7 +66,7 @@ namespace Indotalent.Administration.Repositories
 
             result.Entities = new List<TranslationItem>();
 
-            Func<string, string> effective = delegate(string key)
+            Func<string, string> effective = delegate (string key)
             {
                 if (key.StartsWith("Navigation."))
                 {

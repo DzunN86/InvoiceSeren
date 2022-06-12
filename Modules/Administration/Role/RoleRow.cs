@@ -10,8 +10,8 @@ namespace Indotalent.Administration.Entities
     [DisplayName("Roles"), InstanceName("Role")]
     [ReadPermission(PermissionKeys.Security)]
     [ModifyPermission(PermissionKeys.Security)]
-    [LookupScript]
-    public sealed class RoleRow : LoggingRow<RoleRow.RowFields>, IIdRow, INameRow
+    [LookupScript(LookupType = typeof(MultiTenantRoleRowLookupScript<>))]
+    public sealed class RoleRow : LoggingRow<RoleRow.RowFields>, IIdRow, INameRow, IMultiTenantRow
     {
         [DisplayName("Role Id"), Identity, ForeignKey("Roles", "RoleId"), LeftJoin("jRole"), IdProperty]
         public Int32? RoleId
@@ -25,6 +25,26 @@ namespace Indotalent.Administration.Entities
         {
             get => fields.RoleName[this];
             set => fields.RoleName[this] = value;
+        }
+
+        [DisplayName("Tenant"), ForeignKey("Tenant", "TenantId"), LeftJoin("jTenant")]
+        [Insertable(false), Updatable(false)]
+        public Int32? TenantId
+        {
+            get { return Fields.TenantId[this]; }
+            set { Fields.TenantId[this] = value; }
+        }
+
+        [DisplayName("Tenant"), Expression("jTenant.TenantName")]
+        public String TenantName
+        {
+            get { return Fields.TenantName[this]; }
+            set { Fields.TenantName[this] = value; }
+        }
+
+        public Int32Field TenantIdField
+        {
+            get { return Fields.TenantId; }
         }
 
 
@@ -41,6 +61,8 @@ namespace Indotalent.Administration.Entities
         {
             public Int32Field RoleId;
             public StringField RoleName;
+            public Int32Field TenantId;
+            public StringField TenantName;
         }
     }
 }

@@ -20,4 +20,4 @@ namespace Indotalent
         public DateTime? LastDirectoryUpdate { get; set; }
         public int TenantId { get; set; }
     }
-} 
+}

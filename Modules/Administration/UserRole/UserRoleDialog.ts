@@ -22,7 +22,6 @@
 
             opt.buttons = [{
                 text: Q.text('Dialogs.OkButton'),
-                cssClass: 'btn btn-primary',
                 click: () => {
                     Q.serviceRequest('Administration/UserRole/Update', {
                         UserID: this.options.userID,

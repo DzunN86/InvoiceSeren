@@ -46,7 +46,8 @@ namespace Indotalent.Administration.Entities
             get => fields.User[this];
             set => fields.User[this] = value;
         }
-        public UserRoleRow()
+
+        public UserRoleRow()
         {
         }
 

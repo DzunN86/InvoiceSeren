@@ -1,14 +1,13 @@
-﻿
+﻿using Indotalent.Administration.Repositories;
+using Microsoft.Extensions.Caching.Memory;
+using Serenity.Abstractions;
+using Serenity.ComponentModel;
+using Serenity.Web;
+using System;
+using System.Collections.Generic;
+
 namespace Indotalent.Administration
 {
-    using Microsoft.Extensions.Caching.Memory;
-    using Indotalent.Administration.Repositories;
-    using Serenity.Abstractions;
-    using Serenity.ComponentModel;
-    using Serenity.Web;
-    using System;
-    using System.Collections.Generic;
-
     [DataScript("Administration.PermissionKeys", Permission = PermissionKeys.Security)]
     public class PermissionKeysDataScript : DataScript<IEnumerable<string>>
     {

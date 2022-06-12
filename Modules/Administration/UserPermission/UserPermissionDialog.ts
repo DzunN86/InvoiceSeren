@@ -37,7 +37,6 @@
             opt.buttons = [
                 {
                     text: Q.text('Dialogs.OkButton'),
-                    cssClass: 'btn btn-primary',
                     click: e => {
                         UserPermissionService.Update({
                             UserID: this.options.userID,

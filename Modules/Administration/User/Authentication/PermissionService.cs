@@ -1,11 +1,11 @@
 ﻿using Indotalent.Administration.Entities;
+using Indotalent.Administration.Repositories;
 using Serenity;
 using Serenity.Abstractions;
 using Serenity.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Indotalent.Administration.Repositories;
 
 namespace Indotalent.Administration
 {
@@ -16,7 +16,7 @@ namespace Indotalent.Administration
         public ITypeSource TypeSource { get; }
         protected IUserAccessor UserAccessor { get; }
 
-        public PermissionService(ITwoLevelCache cache, ISqlConnections sqlConnections, 
+        public PermissionService(ITwoLevelCache cache, ISqlConnections sqlConnections,
             ITypeSource typeSource, IUserAccessor userAccessor)
         {
             Cache = cache ?? throw new ArgumentNullException(nameof(cache));

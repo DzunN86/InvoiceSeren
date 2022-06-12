@@ -1,5 +1,5 @@
-﻿using Microsoft.Extensions.Caching.Memory;
-using Indotalent.Administration.Entities;
+﻿using Indotalent.Administration.Entities;
+using Microsoft.Extensions.Caching.Memory;
 using Serenity;
 using Serenity.Abstractions;
 using Serenity.ComponentModel;
@@ -253,6 +253,10 @@ namespace Indotalent.Administration.Repositories
                             ProcessAttributes<PermissionAttributeBase>(result, member, x => x.Permission);
                 }
 
+                //only admin can see tenant menu and language menu
+                result.Remove(PermissionKeys.Tenant);
+                result.Remove(PermissionKeys.Translation);
+
                 result.Remove("*");
                 result.Remove("?");
 
@@ -260,7 +264,7 @@ namespace Indotalent.Administration.Repositories
             });
         }
 
-        public static IDictionary<string, HashSet<string>> GetImplicitPermissions(IMemoryCache memoryCache, 
+        public static IDictionary<string, HashSet<string>> GetImplicitPermissions(IMemoryCache memoryCache,
             ITypeSource typeSource)
         {
             if (memoryCache is null)
