@@ -59,5 +59,12 @@ namespace Indotalent.Sales.Endpoints
             return ExcelContentResult.Create(bytes, "InvoicePaymentList_" +
                 DateTime.Now.ToString("yyyyMMdd_HHmmss", CultureInfo.InvariantCulture) + ".xlsx");
         }
+
+        [HttpPost]
+        public InvoicePaymentCurrencyResponse Currency(IDbConnection connection, InvoicePaymentCurrencyRequest request,
+            [FromServices] IInvoicePaymentCurrencyHandler handler)
+        {
+            return handler.Currency(connection, request);
+        }
     }
 }

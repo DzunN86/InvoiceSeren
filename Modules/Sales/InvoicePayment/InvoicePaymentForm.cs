@@ -12,18 +12,35 @@ namespace Indotalent.Sales.Forms
     [BasedOnRow(typeof(InvoicePaymentRow), CheckNames = true)]
     public class InvoicePaymentForm
     {
-        public int InvoiceId { get; set; }
-        public string Number { get; set; }
-        public string Description { get; set; }
-        public string SalesGroup { get; set; }
+        [Tab("General")]
+        [Category("Invoice Payment")]
+        public String Number { get; set; }
+        [TextAreaEditor(Rows = 3)]
+        public String Description { get; set; }
+
+        [Category("Paid Invoice")]
+        public Int32 InvoiceId { get; set; }
+        public Double InvoiceAmount { get; set; }
+
+        [Category("Currency")]
+        public String CurrencyName { get; set; }
+
+        [Category("Payment Info")]
+        [DefaultValue("now")]
         public DateTime PaymentDate { get; set; }
-        public int CashBankId { get; set; }
-        public double InvoiceAmount { get; set; }
-        public double PaymentAmount { get; set; }
-        public DateTime InsertDate { get; set; }
-        public int InsertUserId { get; set; }
-        public DateTime UpdateDate { get; set; }
-        public int UpdateUserId { get; set; }
-        public int TenantId { get; set; }
+        public Int32 CashBankId { get; set; }
+        public Double PaymentAmount { get; set; }
+
+
+        [Tab("Customer")]
+        [Category("Name")]
+        public String CustomerName { get; set; }
+        [Category("Address")]
+        public String CustomerStreet { get; set; }
+        public String CustomerCity { get; set; }
+        public String CustomerState { get; set; }
+        public String CustomerZipCode { get; set; }
+        public String CustomerPhone { get; set; }
+        public String CustomerEmail { get; set; }
     }
 }

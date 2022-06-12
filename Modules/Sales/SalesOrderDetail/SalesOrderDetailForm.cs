@@ -12,20 +12,22 @@ namespace Indotalent.Sales.Forms
     [BasedOnRow(typeof(SalesOrderDetailRow), CheckNames = true)]
     public class SalesOrderDetailForm
     {
-        public int SalesOrderId { get; set; }
-        public int ProductId { get; set; }
-        public double Price { get; set; }
-        public double Qty { get; set; }
-        public double SubTotal { get; set; }
-        public double Discount { get; set; }
-        public double BeforeTax { get; set; }
-        public double TaxPercentage { get; set; }
-        public double TaxAmount { get; set; }
-        public double Total { get; set; }
-        public DateTime InsertDate { get; set; }
-        public int InsertUserId { get; set; }
-        public DateTime UpdateDate { get; set; }
-        public int UpdateUserId { get; set; }
-        public int TenantId { get; set; }
+        [Tab("General")]
+        [Category("Main")]
+        public Int32 ProductId { get; set; }
+        [HalfWidth]
+        public Double Price { get; set; }
+        [HalfWidth]
+        public Double Qty { get; set; }
+        [HalfWidth]
+        public Double Discount { get; set; }
+        [HalfWidth]
+        public Double TaxPercentage { get; set; }
+
+        [Category("Summary")]
+        public Double SubTotal { get; set; }
+        public Double BeforeTax { get; set; }
+        public Double TaxAmount { get; set; }
+        public Double Total { get; set; }
     }
 }

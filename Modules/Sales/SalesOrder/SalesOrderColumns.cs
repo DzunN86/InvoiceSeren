@@ -12,25 +12,17 @@ namespace Indotalent.Sales.Columns
     [BasedOnRow(typeof(SalesOrderRow), CheckNames = true)]
     public class SalesOrderColumns
     {
-        [EditLink, DisplayName("Db.Shared.RecordId"), AlignRight]
-        public int Id { get; set; }
         [EditLink]
-        public string Number { get; set; }
-        public string Description { get; set; }
-        public string SalesGroup { get; set; }
+        [SortOrder(1, descending: true)]
+        [Width(200)]
+        public String Number { get; set; }
+        [Width(200)]
         public DateTime OrderDate { get; set; }
-        public int CustomerId { get; set; }
-        public int SalesChannelId { get; set; }
-        public double SubTotal { get; set; }
-        public double Discount { get; set; }
-        public double BeforeTax { get; set; }
-        public double TaxAmount { get; set; }
-        public double Total { get; set; }
-        public double OtherCharge { get; set; }
-        public DateTime InsertDate { get; set; }
-        public int InsertUserId { get; set; }
-        public DateTime UpdateDate { get; set; }
-        public int UpdateUserId { get; set; }
-        public int TenantId { get; set; }
+        [Width(200)]
+        public String CustomerName { get; set; }
+        [Width(200)]
+        public Double Total { get; set; }
+        [Width(200)]
+        public String TenantName { get; set; }
     }
 }

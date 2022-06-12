@@ -1,4 +1,5 @@
-﻿using Serenity;
+﻿using Indotalent.Administration;
+using Serenity;
 using Serenity.Data;
 using Serenity.Services;
 using System;
@@ -16,6 +17,27 @@ namespace Indotalent.Sales
         public CustomerSaveHandler(IRequestContext context)
              : base(context)
         {
+        }
+        protected override void BeforeSave()
+        {
+            base.BeforeSave();
+
+
+            if (this.IsCreate)
+            {
+                if (Row.Name.ToLower().Equals("auto"))
+                {
+                    var tenant = UnitOfWork.Connection.ById<TenantRow>(Row.TenantId);
+                    var request = new GetNextNumberRequest()
+                    {
+                        Prefix = tenant.CustomerNumberUseDate.Value ? tenant.CustomerNumberPrefix + "/" + DateTime.Now.ToString("yyyyMMdd") : tenant.CustomerNumberPrefix,
+                        Length = tenant.CustomerNumberLength.Value
+                    };
+                    var respone = MultiTenantHelper.GetNextNumber(UnitOfWork.Connection, request, MyRow.Fields.Name, tenant.TenantId);
+                    Row.Name = respone.Serial;
+                }
+
+            }
         }
     }
 }

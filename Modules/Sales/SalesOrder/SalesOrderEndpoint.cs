@@ -59,5 +59,12 @@ namespace Indotalent.Sales.Endpoints
             return ExcelContentResult.Create(bytes, "SalesOrderList_" +
                 DateTime.Now.ToString("yyyyMMdd_HHmmss", CultureInfo.InvariantCulture) + ".xlsx");
         }
+
+        [HttpPost]
+        public SalesOrderCurrencyResponse Currency(IDbConnection connection, SalesOrderCurrencyRequest request,
+            [FromServices] ISalesOrderCurrencyHandler handler)
+        {
+            return handler.Currency(connection, request);
+        }
     }
 }

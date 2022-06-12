@@ -173,6 +173,7 @@ namespace MVC
             public static class Invoice
             {
                 public const string InvoiceIndex = "~/Modules/Sales/Invoice/InvoiceIndex.cshtml";
+                public const string InvoicePrint = "~/Modules/Sales/Invoice/InvoicePrint.cshtml";
             }
 
             public static class InvoiceDetail
@@ -183,6 +184,7 @@ namespace MVC
             public static class InvoicePayment
             {
                 public const string InvoicePaymentIndex = "~/Modules/Sales/InvoicePayment/InvoicePaymentIndex.cshtml";
+                public const string InvoicePaymentPrint = "~/Modules/Sales/InvoicePayment/InvoicePaymentPrint.cshtml";
             }
 
             public static class SalesChannel
@@ -193,6 +195,7 @@ namespace MVC
             public static class SalesOrder
             {
                 public const string SalesOrderIndex = "~/Modules/Sales/SalesOrder/SalesOrderIndex.cshtml";
+                public const string SalesOrderPrint = "~/Modules/Sales/SalesOrder/SalesOrderPrint.cshtml";
             }
 
             public static class SalesOrderDetail

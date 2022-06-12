@@ -1,18 +1,20 @@
 ﻿namespace Indotalent.Sales {
     export interface InvoicePaymentForm {
-        InvoiceId: Serenity.IntegerEditor;
         Number: Serenity.StringEditor;
-        Description: Serenity.StringEditor;
-        SalesGroup: Serenity.StringEditor;
-        PaymentDate: Serenity.DateEditor;
-        CashBankId: Serenity.IntegerEditor;
+        Description: Serenity.TextAreaEditor;
+        InvoiceId: Serenity.LookupEditor;
         InvoiceAmount: Serenity.DecimalEditor;
+        CurrencyName: Serenity.StringEditor;
+        PaymentDate: Serenity.DateEditor;
+        CashBankId: Serenity.LookupEditor;
         PaymentAmount: Serenity.DecimalEditor;
-        InsertDate: Serenity.DateEditor;
-        InsertUserId: Serenity.IntegerEditor;
-        UpdateDate: Serenity.DateEditor;
-        UpdateUserId: Serenity.IntegerEditor;
-        TenantId: Serenity.IntegerEditor;
+        CustomerName: Serenity.StringEditor;
+        CustomerStreet: Serenity.StringEditor;
+        CustomerCity: Serenity.StringEditor;
+        CustomerState: Serenity.StringEditor;
+        CustomerZipCode: Serenity.StringEditor;
+        CustomerPhone: Serenity.StringEditor;
+        CustomerEmail: Serenity.StringEditor;
     }
 
     export class InvoicePaymentForm extends Serenity.PrefixedContext {
@@ -26,25 +28,28 @@
                 InvoicePaymentForm.init = true;
 
                 var s = Serenity;
-                var w0 = s.IntegerEditor;
-                var w1 = s.StringEditor;
-                var w2 = s.DateEditor;
+                var w0 = s.StringEditor;
+                var w1 = s.TextAreaEditor;
+                var w2 = s.LookupEditor;
                 var w3 = s.DecimalEditor;
+                var w4 = s.DateEditor;
 
                 Q.initFormType(InvoicePaymentForm, [
-                    'InvoiceId', w0,
-                    'Number', w1,
+                    'Number', w0,
                     'Description', w1,
-                    'SalesGroup', w1,
-                    'PaymentDate', w2,
-                    'CashBankId', w0,
+                    'InvoiceId', w2,
                     'InvoiceAmount', w3,
+                    'CurrencyName', w0,
+                    'PaymentDate', w4,
+                    'CashBankId', w2,
                     'PaymentAmount', w3,
-                    'InsertDate', w2,
-                    'InsertUserId', w0,
-                    'UpdateDate', w2,
-                    'UpdateUserId', w0,
-                    'TenantId', w0
+                    'CustomerName', w0,
+                    'CustomerStreet', w0,
+                    'CustomerCity', w0,
+                    'CustomerState', w0,
+                    'CustomerZipCode', w0,
+                    'CustomerPhone', w0,
+                    'CustomerEmail', w0
                 ]);
             }
         }

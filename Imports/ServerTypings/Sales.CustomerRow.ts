@@ -12,12 +12,21 @@
         TenantId?: number;
         TenantName?: string;
         ContactList?: CustomerContactRow[];
+        InsertUserId?: number;
+        InsertDate?: string;
+        UpdateUserId?: number;
+        UpdateDate?: string;
     }
 
     export namespace CustomerRow {
         export const idProperty = 'Id';
         export const nameProperty = 'Name';
         export const localTextPrefix = 'Sales.Customer';
+        export const lookupKey = 'Sales.Customer';
+
+        export function getLookup(): Q.Lookup<CustomerRow> {
+            return Q.getLookup<CustomerRow>('Sales.Customer');
+        }
         export const deletePermission = 'Sales:Customer';
         export const insertPermission = 'Sales:Customer';
         export const readPermission = 'Sales:Customer';
@@ -35,7 +44,11 @@
             Email = "Email",
             TenantId = "TenantId",
             TenantName = "TenantName",
-            ContactList = "ContactList"
+            ContactList = "ContactList",
+            InsertUserId = "InsertUserId",
+            InsertDate = "InsertDate",
+            UpdateUserId = "UpdateUserId",
+            UpdateDate = "UpdateDate"
         }
     }
 }

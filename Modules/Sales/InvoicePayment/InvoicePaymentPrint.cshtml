@@ -1,0 +1,115 @@
+﻿@model Indotalent.Sales.InvoicePaymentPrintData
+
+@if ((bool?)ViewData["Printing"] == true)
+{
+    Layout = "_LayoutNoNavigation";
+}
+
+<section class="invoice">
+    <div class="row">
+        <div class="col-xs-12">
+            <h2 class="page-header">
+                PAYMENT RECEIVE
+                <small class="pull-right">Print at: @DateTime.Now.ToShortDateString()</small>
+            </h2>
+        </div>
+    </div>
+    <!-- info row -->
+    <div class="row invoice-info">
+        <!-- /.col -->
+        <div class="col-sm-4 invoice-col">
+            Receive Payment From
+            <address>
+                <strong>@Model.Customer.Name</strong><br>
+                @Model.Customer.Street<br>
+                @Model.Customer.City @Model.Customer.State @Model.Customer.ZipCode<br>
+                Phone: @Model.Customer.Phone<br>
+                Email: @Model.Customer.Email
+            </address>
+        </div>
+        <!-- /.col -->
+        <div class="col-sm-4 invoice-col">
+            Payment Number:<br>
+            @Model.Header.Number<br>
+            Payment Date:<br>
+            @Model.Header.PaymentDate.Value.ToShortDateString()<br>
+        </div>
+        <!-- /.col -->
+        <div class="col-sm-4 invoice-col">
+            Invoice Number:<br>
+            @Model.Header.InvoiceNumber<br>
+            Amount Invoice:<br>
+            @Model.Company.Currency @Model.Header.InvoiceAmount.Value.ToString("#,##0.00")
+        </div>
+    </div>
+    <!-- /.row -->
+    <!-- Table row -->
+    <div class="row">
+        <div class="col-xs-12 table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Info</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Payment Amount:</td>
+                        <td>@Model.Company.Currency @Model.Header.PaymentAmount.Value.ToString("#,##0.00")</td>
+                    </tr>
+                    <tr>
+                        <td>Payment Mode:</td>
+                        <td>@Model.Header.CashBankName</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- /.col -->
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-xs-12">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th class="text-center">Prepared By</th>
+                        <th class="text-center">Confirmed By</th>
+                        <th class="text-center">Approved By</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                        </td>
+                        <td>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                        </td>
+                        <td>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

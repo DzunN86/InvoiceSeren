@@ -11,16 +11,24 @@
         TaxPercentage?: number;
         TaxAmount?: number;
         Total?: number;
-        InsertDate?: string;
-        InsertUserId?: number;
-        UpdateDate?: string;
-        UpdateUserId?: number;
+        ProductName?: string;
         TenantId?: number;
+        TenantName?: string;
+        InsertUserId?: number;
+        InsertDate?: string;
+        UpdateUserId?: number;
+        UpdateDate?: string;
     }
 
     export namespace InvoiceDetailRow {
         export const idProperty = 'Id';
+        export const nameProperty = 'ProductName';
         export const localTextPrefix = 'Sales.InvoiceDetail';
+        export const lookupKey = 'Sales.InvoiceDetail';
+
+        export function getLookup(): Q.Lookup<InvoiceDetailRow> {
+            return Q.getLookup<InvoiceDetailRow>('Sales.InvoiceDetail');
+        }
         export const deletePermission = 'Sales:Invoice';
         export const insertPermission = 'Sales:Invoice';
         export const readPermission = 'Sales:Invoice';
@@ -38,11 +46,13 @@
             TaxPercentage = "TaxPercentage",
             TaxAmount = "TaxAmount",
             Total = "Total",
-            InsertDate = "InsertDate",
+            ProductName = "ProductName",
+            TenantId = "TenantId",
+            TenantName = "TenantName",
             InsertUserId = "InsertUserId",
-            UpdateDate = "UpdateDate",
+            InsertDate = "InsertDate",
             UpdateUserId = "UpdateUserId",
-            TenantId = "TenantId"
+            UpdateDate = "UpdateDate"
         }
     }
 }

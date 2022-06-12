@@ -12,22 +12,15 @@ namespace Indotalent.Sales.Columns
     [BasedOnRow(typeof(SalesOrderDetailRow), CheckNames = true)]
     public class SalesOrderDetailColumns
     {
-        [EditLink, DisplayName("Db.Shared.RecordId"), AlignRight]
-        public int Id { get; set; }
-        public int SalesOrderId { get; set; }
-        public int ProductId { get; set; }
-        public double Price { get; set; }
-        public double Qty { get; set; }
-        public double SubTotal { get; set; }
-        public double Discount { get; set; }
-        public double BeforeTax { get; set; }
-        public double TaxPercentage { get; set; }
-        public double TaxAmount { get; set; }
-        public double Total { get; set; }
-        public DateTime InsertDate { get; set; }
-        public int InsertUserId { get; set; }
-        public DateTime UpdateDate { get; set; }
-        public int UpdateUserId { get; set; }
-        public int TenantId { get; set; }
+        [EditLink]
+        public String ProductName { get; set; }
+        public Double Price { get; set; }
+        public Double Qty { get; set; }
+        public Double SubTotal { get; set; }
+        public Double Discount { get; set; }
+        public Double BeforeTax { get; set; }
+        public Double TaxPercentage { get; set; }
+        public Double TaxAmount { get; set; }
+        public Double Total { get; set; }
     }
 }

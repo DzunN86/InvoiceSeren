@@ -12,12 +12,10 @@ namespace Indotalent.Sales.Forms
     [BasedOnRow(typeof(SalesChannelRow), CheckNames = true)]
     public class SalesChannelForm
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public DateTime InsertDate { get; set; }
-        public int InsertUserId { get; set; }
-        public DateTime UpdateDate { get; set; }
-        public int UpdateUserId { get; set; }
-        public int TenantId { get; set; }
+        [Tab("General")]
+        [Category("Sales Channel")]
+        public String Name { get; set; }
+        [TextAreaEditor(Rows = 3)]
+        public String Description { get; set; }
     }
 }

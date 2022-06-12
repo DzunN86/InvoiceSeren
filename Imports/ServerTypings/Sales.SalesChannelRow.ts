@@ -3,17 +3,23 @@
         Id?: number;
         Name?: string;
         Description?: string;
-        InsertDate?: string;
-        InsertUserId?: number;
-        UpdateDate?: string;
-        UpdateUserId?: number;
         TenantId?: number;
+        TenantName?: string;
+        InsertUserId?: number;
+        InsertDate?: string;
+        UpdateUserId?: number;
+        UpdateDate?: string;
     }
 
     export namespace SalesChannelRow {
         export const idProperty = 'Id';
         export const nameProperty = 'Name';
         export const localTextPrefix = 'Sales.SalesChannel';
+        export const lookupKey = 'Sales.SalesChannel';
+
+        export function getLookup(): Q.Lookup<SalesChannelRow> {
+            return Q.getLookup<SalesChannelRow>('Sales.SalesChannel');
+        }
         export const deletePermission = 'Sales:SalesChannel';
         export const insertPermission = 'Sales:SalesChannel';
         export const readPermission = 'Sales:SalesChannel';
@@ -23,11 +29,12 @@
             Id = "Id",
             Name = "Name",
             Description = "Description",
-            InsertDate = "InsertDate",
+            TenantId = "TenantId",
+            TenantName = "TenantName",
             InsertUserId = "InsertUserId",
-            UpdateDate = "UpdateDate",
+            InsertDate = "InsertDate",
             UpdateUserId = "UpdateUserId",
-            TenantId = "TenantId"
+            UpdateDate = "UpdateDate"
         }
     }
 }

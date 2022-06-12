@@ -31,5 +31,4 @@ namespace Indotalent.Sales.Forms
         [CustomerContactEditor]
         public List<CustomerContactRow> ContactList { get; set; }
     }
-    //contoh perubahan
 }
