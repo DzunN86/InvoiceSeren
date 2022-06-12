@@ -58,8 +58,8 @@
 
         protected getTemplate() {
             return `
-    <h2 class="text-center p-4">
-        <img src="${Q.resolveUrl("~/Content/site/images/serenity-logo-w-128.png")}"
+    <h2 class="text-center p-4 text-white">
+        <img src="${Q.resolveUrl("~/Content/site/images/invoice-logo-w-128.png")}"
             class="rounded-circle p-1" style="background-color: var(--s-sidebar-band-bg)"
             width="50" height="50" /> Indotalent
     </h2>
@@ -82,7 +82,7 @@
     </div>
 
     <div class="text-center mt-2">
-        <a class="text-decoration-none" href="${Q.resolveUrl('~/Account/SignUp')}">${Q.text("Forms.Membership.Login.SignUpButton")}</a>
+        <a class="text-decoration-none text-white" href="${Q.resolveUrl('~/Account/SignUp')}">${Q.text("Forms.Membership.Login.SignUpButton")}</a>
     </div>   
 `;
         }
