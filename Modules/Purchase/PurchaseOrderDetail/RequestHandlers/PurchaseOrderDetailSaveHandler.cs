@@ -17,5 +17,16 @@ namespace Indotalent.Purchase
              : base(context)
         {
         }
+
+        protected override void BeforeSave()
+        {
+            base.BeforeSave();
+
+            Row.SubTotal = Row.Price * Row.Qty;
+            Row.BeforeTax = Row.SubTotal - Row.Discount;
+            Row.TaxAmount = (Row.TaxPercentage * Row.BeforeTax) / 100.0;
+            Row.Total = Row.BeforeTax + Row.TaxAmount;
+
+        }
     }
 }

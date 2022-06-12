@@ -101,6 +101,7 @@ namespace MVC
             public static class Product
             {
                 public const string ProductIndex = "~/Modules/Merchandise/Product/ProductIndex.cshtml";
+                public const string ProductPrint = "~/Modules/Merchandise/Product/ProductPrint.cshtml";
             }
 
             public static class Size
@@ -120,6 +121,7 @@ namespace MVC
             public static class Bill
             {
                 public const string BillIndex = "~/Modules/Purchase/Bill/BillIndex.cshtml";
+                public const string BillPrint = "~/Modules/Purchase/Bill/BillPrint.cshtml";
             }
 
             public static class BillDetail
@@ -130,11 +132,13 @@ namespace MVC
             public static class BillPayment
             {
                 public const string BillPaymentIndex = "~/Modules/Purchase/BillPayment/BillPaymentIndex.cshtml";
+                public const string BillPaymentPrint = "~/Modules/Purchase/BillPayment/BillPaymentPrint.cshtml";
             }
 
             public static class PurchaseOrder
             {
                 public const string PurchaseOrderIndex = "~/Modules/Purchase/PurchaseOrder/PurchaseOrderIndex.cshtml";
+                public const string PurchaseOrderPrint = "~/Modules/Purchase/PurchaseOrder/PurchaseOrderPrint.cshtml";
             }
 
             public static class PurchaseOrderDetail

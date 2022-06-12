@@ -2,128 +2,131 @@
 using Serenity.ComponentModel;
 using Serenity.Data;
 using Serenity.Data.Mapping;
+using Serenity.Extensions.Entities;
 using System;
 using System.ComponentModel;
 using System.IO;
 
 namespace Indotalent.Purchase
 {
-    [ConnectionKey("Default"), Module("Purchase"), TableName("BillDetail")]
-    [DisplayName("Bill Detail"), InstanceName("Bill Detail")]
-    [ReadPermission("Administration:General")]
-    [ModifyPermission("Administration:General")]
-    public sealed class BillDetailRow : Row<BillDetailRow.RowFields>, IIdRow
+    [ConnectionKey("Default"), Module("Purchase"), TableName("[BillDetail]")]
+    [DisplayName("Item Details"), InstanceName("Item Detail")]
+    [ReadPermission("Purchase:Bill")]
+    [ModifyPermission("Purchase:Bill")]
+    [LookupScript(LookupType = typeof(MultiTenantRowLookupScript<>))]
+    public sealed class BillDetailRow : LoggingRow<BillDetailRow.RowFields>, IIdRow, INameRow, IMultiTenantRow
     {
         [DisplayName("Id"), Identity, IdProperty]
-        public int? Id
+        public Int32? Id
         {
             get => fields.Id[this];
             set => fields.Id[this] = value;
         }
 
-        [DisplayName("Bill Id"), NotNull]
-        public int? BillId
+        [DisplayName("Bill"), PrimaryKey, Updatable(false), NotNull, ForeignKey("[Bill]", "Id"), LeftJoin("jBill"), TextualField("BillNumber")]
+        public Int32? BillId
         {
             get => fields.BillId[this];
             set => fields.BillId[this] = value;
         }
 
-        [DisplayName("Product Id"), NotNull]
-        public int? ProductId
+        [DisplayName("Product"), PrimaryKey, NotNull, ForeignKey("[Product]", "Id"), LeftJoin("jProduct"), TextualField("ProductName")]
+        [LookupEditor(typeof(Merchandise.ProductRow))]
+        public Int32? ProductId
         {
             get => fields.ProductId[this];
             set => fields.ProductId[this] = value;
         }
 
-        [DisplayName("Price"), NotNull]
-        public double? Price
+        [DisplayName("Product"), Expression("jProduct.[Name]"), MinSelectLevel(SelectLevel.List), NameProperty]
+        public String ProductName
+        {
+            get => fields.ProductName[this];
+            set => fields.ProductName[this] = value;
+        }
+
+        [DisplayName("Price"), NotNull, DecimalEditor(Decimals = 2, MinValue = 0), DisplayFormat("#,##0.##")]
+        [DefaultValue(0)]
+        public Double? Price
         {
             get => fields.Price[this];
             set => fields.Price[this] = value;
         }
 
         [DisplayName("Qty"), NotNull]
-        public double? Qty
+        [DefaultValue(1)]
+        public Double? Qty
         {
             get => fields.Qty[this];
             set => fields.Qty[this] = value;
         }
 
-        [DisplayName("Sub Total"), NotNull]
-        public double? SubTotal
+        [DisplayName("Sub Total"), NotNull, DecimalEditor(Decimals = 2, MinValue = 0), DisplayFormat("#,##0.##")]
+        [DefaultValue(0)]
+        public Double? SubTotal
         {
             get => fields.SubTotal[this];
             set => fields.SubTotal[this] = value;
         }
 
-        [DisplayName("Discount"), NotNull]
-        public double? Discount
+        [DisplayName("Discount"), NotNull, DecimalEditor(Decimals = 2, MinValue = 0), DisplayFormat("#,##0.##")]
+        [DefaultValue(0)]
+        public Double? Discount
         {
             get => fields.Discount[this];
             set => fields.Discount[this] = value;
         }
 
-        [DisplayName("Before Tax"), NotNull]
-        public double? BeforeTax
+        [DisplayName("Before Tax"), NotNull, DecimalEditor(Decimals = 2, MinValue = 0), DisplayFormat("#,##0.##")]
+        [DefaultValue(0)]
+        public Double? BeforeTax
         {
             get => fields.BeforeTax[this];
             set => fields.BeforeTax[this] = value;
         }
 
         [DisplayName("Tax Percentage"), NotNull]
-        public double? TaxPercentage
+        [DefaultValue(0)]
+        public Double? TaxPercentage
         {
             get => fields.TaxPercentage[this];
             set => fields.TaxPercentage[this] = value;
         }
 
-        [DisplayName("Tax Amount"), NotNull]
-        public double? TaxAmount
+        [DisplayName("Tax Amount"), NotNull, DecimalEditor(Decimals = 2, MinValue = 0), DisplayFormat("#,##0.##")]
+        [DefaultValue(0)]
+        public Double? TaxAmount
         {
             get => fields.TaxAmount[this];
             set => fields.TaxAmount[this] = value;
         }
 
-        [DisplayName("Total"), NotNull]
-        public double? Total
+        [DisplayName("Total"), NotNull, DecimalEditor(Decimals = 2, MinValue = 0), DisplayFormat("#,##0.##")]
+        [DefaultValue(0)]
+        public Double? Total
         {
             get => fields.Total[this];
             set => fields.Total[this] = value;
         }
 
-        [DisplayName("Insert Date")]
-        public DateTime? InsertDate
+        [DisplayName("Tenant"), ForeignKey("Tenant", "TenantId"), LeftJoin("jTenant")]
+        [Insertable(false), Updatable(false)]
+        public Int32? TenantId
         {
-            get => fields.InsertDate[this];
-            set => fields.InsertDate[this] = value;
+            get { return Fields.TenantId[this]; }
+            set { Fields.TenantId[this] = value; }
         }
 
-        [DisplayName("Insert User Id")]
-        public int? InsertUserId
+        [DisplayName("Tenant"), Expression("jTenant.TenantName"), MinSelectLevel(SelectLevel.List)]
+        public String TenantName
         {
-            get => fields.InsertUserId[this];
-            set => fields.InsertUserId[this] = value;
+            get { return Fields.TenantName[this]; }
+            set { Fields.TenantName[this] = value; }
         }
 
-        [DisplayName("Update Date")]
-        public DateTime? UpdateDate
+        public Int32Field TenantIdField
         {
-            get => fields.UpdateDate[this];
-            set => fields.UpdateDate[this] = value;
-        }
-
-        [DisplayName("Update User Id")]
-        public int? UpdateUserId
-        {
-            get => fields.UpdateUserId[this];
-            set => fields.UpdateUserId[this] = value;
-        }
-
-        [DisplayName("Tenant Id"), NotNull]
-        public int? TenantId
-        {
-            get => fields.TenantId[this];
-            set => fields.TenantId[this] = value;
+            get { return Fields.TenantId; }
         }
 
         public BillDetailRow()
@@ -136,7 +139,7 @@ namespace Indotalent.Purchase
         {
         }
 
-        public class RowFields : RowFieldsBase
+        public class RowFields : LoggingRowFields
         {
             public Int32Field Id;
             public Int32Field BillId;
@@ -149,11 +152,9 @@ namespace Indotalent.Purchase
             public DoubleField TaxPercentage;
             public DoubleField TaxAmount;
             public DoubleField Total;
-            public DateTimeField InsertDate;
-            public Int32Field InsertUserId;
-            public DateTimeField UpdateDate;
-            public Int32Field UpdateUserId;
+            public StringField ProductName;
             public Int32Field TenantId;
+            public StringField TenantName;
         }
     }
 }

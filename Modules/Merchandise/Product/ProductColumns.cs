@@ -12,28 +12,21 @@ namespace Indotalent.Merchandise.Columns
     [BasedOnRow(typeof(ProductRow), CheckNames = true)]
     public class ProductColumns
     {
-        [EditLink, DisplayName("Db.Shared.RecordId"), AlignRight]
-        public int Id { get; set; }
         [EditLink]
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public string Picture { get; set; }
-        public string InternalCode { get; set; }
-        public string Barcode { get; set; }
-        public int UomId { get; set; }
-        public int BrandId { get; set; }
-        public int CategoryId { get; set; }
-        public int SizeId { get; set; }
-        public int ColourId { get; set; }
-        public int FlavourId { get; set; }
-        public double PurchasePrice { get; set; }
-        public double SalesPrice { get; set; }
-        public int PurchaseTaxId { get; set; }
-        public int SalesTaxId { get; set; }
-        public DateTime InsertDate { get; set; }
-        public int InsertUserId { get; set; }
-        public DateTime UpdateDate { get; set; }
-        public int UpdateUserId { get; set; }
-        public int TenantId { get; set; }
+        public String Name { get; set; }
+        [Width(100)]
+        public String UomName { get; set; }
+        [Width(100)]
+        public String BrandName { get; set; }
+        [Width(100)]
+        public String CategoryName { get; set; }
+        [Width(100)]
+        public String SizeName { get; set; }
+        [Width(100)]
+        public String ColourName { get; set; }
+        [Width(100)]
+        public String FlavourName { get; set; }
+        [Width(200)]
+        public String TenantName { get; set; }
     }
 }

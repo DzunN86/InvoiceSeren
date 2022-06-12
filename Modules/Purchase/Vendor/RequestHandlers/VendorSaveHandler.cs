@@ -1,4 +1,5 @@
-﻿using Serenity;
+﻿using Indotalent.Administration;
+using Serenity;
 using Serenity.Data;
 using Serenity.Services;
 using System;
@@ -16,6 +17,29 @@ namespace Indotalent.Purchase
         public VendorSaveHandler(IRequestContext context)
              : base(context)
         {
+        }
+
+
+        protected override void BeforeSave()
+        {
+            base.BeforeSave();
+
+
+            if (this.IsCreate)
+            {
+                if (Row.Name.ToLower().Equals("auto"))
+                {
+                    var tenant = UnitOfWork.Connection.ById<TenantRow>(Row.TenantId);
+                    var request = new GetNextNumberRequest()
+                    {
+                        Prefix = tenant.VendorNumberUseDate.Value ? tenant.VendorNumberPrefix + "/" + DateTime.Now.ToString("yyyyMMdd") : tenant.VendorNumberPrefix,
+                        Length = tenant.VendorNumberLength.Value
+                    };
+                    var respone = MultiTenantHelper.GetNextNumber(UnitOfWork.Connection, request, MyRow.Fields.Name, tenant.TenantId);
+                    Row.Name = respone.Serial;
+                }
+
+            }
         }
     }
 }

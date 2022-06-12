@@ -3,17 +3,23 @@
         Id?: number;
         Name?: string;
         Description?: string;
-        InsertDate?: string;
-        InsertUserId?: number;
-        UpdateDate?: string;
-        UpdateUserId?: number;
         TenantId?: number;
+        TenantName?: string;
+        InsertUserId?: number;
+        InsertDate?: string;
+        UpdateUserId?: number;
+        UpdateDate?: string;
     }
 
     export namespace BrandRow {
         export const idProperty = 'Id';
         export const nameProperty = 'Name';
         export const localTextPrefix = 'Merchandise.Brand';
+        export const lookupKey = 'Merchandise.Brand';
+
+        export function getLookup(): Q.Lookup<BrandRow> {
+            return Q.getLookup<BrandRow>('Merchandise.Brand');
+        }
         export const deletePermission = 'Merchandise:Brand';
         export const insertPermission = 'Merchandise:Brand';
         export const readPermission = 'Merchandise:Brand';
@@ -23,11 +29,12 @@
             Id = "Id",
             Name = "Name",
             Description = "Description",
-            InsertDate = "InsertDate",
+            TenantId = "TenantId",
+            TenantName = "TenantName",
             InsertUserId = "InsertUserId",
-            UpdateDate = "UpdateDate",
+            InsertDate = "InsertDate",
             UpdateUserId = "UpdateUserId",
-            TenantId = "TenantId"
+            UpdateDate = "UpdateDate"
         }
     }
 }

@@ -2,8 +2,8 @@
     export interface PurchaseOrderRow {
         Id?: number;
         Number?: string;
-        Description?: string;
         ProcurementGroup?: string;
+        Description?: string;
         OrderDate?: string;
         VendorId?: number;
         SubTotal?: number;
@@ -12,27 +12,43 @@
         TaxAmount?: number;
         Total?: number;
         OtherCharge?: number;
-        InsertDate?: string;
-        InsertUserId?: number;
-        UpdateDate?: string;
-        UpdateUserId?: number;
+        VendorName?: string;
+        VendorStreet?: string;
+        VendorCity?: string;
+        VendorState?: string;
+        VendorZipCode?: string;
+        VendorPhone?: string;
+        VendorEmail?: string;
+        CurrencyName?: string;
         TenantId?: number;
+        TenantName?: string;
+        ItemList?: PurchaseOrderDetailRow[];
+        BillList?: BillRow[];
+        InsertUserId?: number;
+        InsertDate?: string;
+        UpdateUserId?: number;
+        UpdateDate?: string;
     }
 
     export namespace PurchaseOrderRow {
         export const idProperty = 'Id';
         export const nameProperty = 'Number';
         export const localTextPrefix = 'Purchase.PurchaseOrder';
-        export const deletePermission = 'Administration:General';
-        export const insertPermission = 'Administration:General';
-        export const readPermission = 'Administration:General';
-        export const updatePermission = 'Administration:General';
+        export const lookupKey = 'Purchase.PurchaseOrder';
+
+        export function getLookup(): Q.Lookup<PurchaseOrderRow> {
+            return Q.getLookup<PurchaseOrderRow>('Purchase.PurchaseOrder');
+        }
+        export const deletePermission = 'Purchase:PurchaseOrder';
+        export const insertPermission = 'Purchase:PurchaseOrder';
+        export const readPermission = 'Purchase:PurchaseOrder';
+        export const updatePermission = 'Purchase:PurchaseOrder';
 
         export declare const enum Fields {
             Id = "Id",
             Number = "Number",
-            Description = "Description",
             ProcurementGroup = "ProcurementGroup",
+            Description = "Description",
             OrderDate = "OrderDate",
             VendorId = "VendorId",
             SubTotal = "SubTotal",
@@ -41,11 +57,22 @@
             TaxAmount = "TaxAmount",
             Total = "Total",
             OtherCharge = "OtherCharge",
-            InsertDate = "InsertDate",
+            VendorName = "VendorName",
+            VendorStreet = "VendorStreet",
+            VendorCity = "VendorCity",
+            VendorState = "VendorState",
+            VendorZipCode = "VendorZipCode",
+            VendorPhone = "VendorPhone",
+            VendorEmail = "VendorEmail",
+            CurrencyName = "CurrencyName",
+            TenantId = "TenantId",
+            TenantName = "TenantName",
+            ItemList = "ItemList",
+            BillList = "BillList",
             InsertUserId = "InsertUserId",
-            UpdateDate = "UpdateDate",
+            InsertDate = "InsertDate",
             UpdateUserId = "UpdateUserId",
-            TenantId = "TenantId"
+            UpdateDate = "UpdateDate"
         }
     }
 }

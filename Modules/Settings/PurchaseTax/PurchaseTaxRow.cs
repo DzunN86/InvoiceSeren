@@ -2,79 +2,66 @@
 using Serenity.ComponentModel;
 using Serenity.Data;
 using Serenity.Data.Mapping;
+using Serenity.Extensions.Entities;
 using System;
 using System.ComponentModel;
 using System.IO;
 
 namespace Indotalent.Settings
 {
-    [ConnectionKey("Default"), Module("Settings"), TableName("PurchaseTax")]
+    [ConnectionKey("Default"), Module("Settings"), TableName("[PurchaseTax]")]
     [DisplayName("Purchase Tax"), InstanceName("Purchase Tax")]
-    [ReadPermission("Administration:General")]
-    [ModifyPermission("Administration:General")]
-    public sealed class PurchaseTaxRow : Row<PurchaseTaxRow.RowFields>, IIdRow, INameRow
+    [ReadPermission("Settings:PurchaseTax")]
+    [ModifyPermission("Settings:PurchaseTax")]
+    [LookupScript(LookupType = typeof(MultiTenantRowLookupScript<>))]
+    public sealed class PurchaseTaxRow : LoggingRow<PurchaseTaxRow.RowFields>, IIdRow, INameRow, IMultiTenantRow
     {
         [DisplayName("Id"), Identity, IdProperty]
-        public int? Id
+        public Int32? Id
         {
             get => fields.Id[this];
             set => fields.Id[this] = value;
         }
 
         [DisplayName("Name"), Size(10), NotNull, QuickSearch, NameProperty]
-        public string Name
+        public String Name
         {
             get => fields.Name[this];
             set => fields.Name[this] = value;
         }
 
         [DisplayName("Description"), Size(1000)]
-        public string Description
+        public String Description
         {
             get => fields.Description[this];
             set => fields.Description[this] = value;
         }
 
-        [DisplayName("Tax Rate Percentage"), NotNull]
-        public double? TaxRatePercentage
+        [DisplayName("Tax Rate Percentage"), DecimalEditor(MinValue = -100, MaxValue = 100, AllowNegatives = true, Decimals = 2), NotNull]
+        public Double? TaxRatePercentage
         {
             get => fields.TaxRatePercentage[this];
             set => fields.TaxRatePercentage[this] = value;
         }
 
-        [DisplayName("Insert Date")]
-        public DateTime? InsertDate
+        [DisplayName("Tenant"), ForeignKey("Tenant", "TenantId"), LeftJoin("jTenant")]
+        [Insertable(false), Updatable(false)]
+        public Int32? TenantId
         {
-            get => fields.InsertDate[this];
-            set => fields.InsertDate[this] = value;
+            get { return Fields.TenantId[this]; }
+            set { Fields.TenantId[this] = value; }
         }
 
-        [DisplayName("Insert User Id")]
-        public int? InsertUserId
+        [DisplayName("Tenant"), Expression("jTenant.TenantName")]
+        public String TenantName
         {
-            get => fields.InsertUserId[this];
-            set => fields.InsertUserId[this] = value;
+            get { return Fields.TenantName[this]; }
+            set { Fields.TenantName[this] = value; }
         }
 
-        [DisplayName("Update Date")]
-        public DateTime? UpdateDate
+        public Int32Field TenantIdField
         {
-            get => fields.UpdateDate[this];
-            set => fields.UpdateDate[this] = value;
-        }
-
-        [DisplayName("Update User Id")]
-        public int? UpdateUserId
-        {
-            get => fields.UpdateUserId[this];
-            set => fields.UpdateUserId[this] = value;
-        }
-
-        [DisplayName("Tenant Id"), NotNull]
-        public int? TenantId
-        {
-            get => fields.TenantId[this];
-            set => fields.TenantId[this] = value;
+            get { return Fields.TenantId; }
         }
 
         public PurchaseTaxRow()
@@ -87,17 +74,14 @@ namespace Indotalent.Settings
         {
         }
 
-        public class RowFields : RowFieldsBase
+        public class RowFields : LoggingRowFields
         {
             public Int32Field Id;
             public StringField Name;
             public StringField Description;
             public DoubleField TaxRatePercentage;
-            public DateTimeField InsertDate;
-            public Int32Field InsertUserId;
-            public DateTimeField UpdateDate;
-            public Int32Field UpdateUserId;
             public Int32Field TenantId;
+            public StringField TenantName;
         }
     }
 }

@@ -12,18 +12,35 @@ namespace Indotalent.Purchase.Forms
     [BasedOnRow(typeof(BillPaymentRow), CheckNames = true)]
     public class BillPaymentForm
     {
-        public int BillId { get; set; }
-        public string Number { get; set; }
-        public string Description { get; set; }
-        public string ProcurementGroup { get; set; }
+        [Tab("General")]
+        [Category("Bill Payment")]
+        public String Number { get; set; }
+        [TextAreaEditor(Rows = 3)]
+        public String Description { get; set; }
+
+        [Category("Bill To Paid")]
+        public Int32 BillId { get; set; }
+        public Double BillAmount { get; set; }
+
+        [Category("Currency")]
+        public String CurrencyName { get; set; }
+
+        [Category("Payment Info")]
+        [DefaultValue("now")]
         public DateTime PaymentDate { get; set; }
-        public int CashBankId { get; set; }
-        public double BillAmount { get; set; }
-        public double PaymentAmount { get; set; }
-        public DateTime InsertDate { get; set; }
-        public int InsertUserId { get; set; }
-        public DateTime UpdateDate { get; set; }
-        public int UpdateUserId { get; set; }
-        public int TenantId { get; set; }
+        public Int32 CashBankId { get; set; }
+        public Double PaymentAmount { get; set; }
+
+
+        [Tab("Vendor")]
+        [Category("Name")]
+        public String VendorName { get; set; }
+        [Category("Address")]
+        public String VendorStreet { get; set; }
+        public String VendorCity { get; set; }
+        public String VendorState { get; set; }
+        public String VendorZipCode { get; set; }
+        public String VendorPhone { get; set; }
+        public String VendorEmail { get; set; }
     }
 }

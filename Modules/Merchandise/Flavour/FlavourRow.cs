@@ -2,72 +2,59 @@
 using Serenity.ComponentModel;
 using Serenity.Data;
 using Serenity.Data.Mapping;
+using Serenity.Extensions.Entities;
 using System;
 using System.ComponentModel;
 using System.IO;
 
 namespace Indotalent.Merchandise
 {
-    [ConnectionKey("Default"), Module("Merchandise"), TableName("Flavour")]
+    [ConnectionKey("Default"), Module("Merchandise"), TableName("[Flavour]")]
     [DisplayName("Flavour"), InstanceName("Flavour")]
     [ReadPermission("Merchandise:Flavour")]
     [ModifyPermission("Merchandise:Flavour")]
-    public sealed class FlavourRow : Row<FlavourRow.RowFields>, IIdRow, INameRow
+    [LookupScript(LookupType = typeof(MultiTenantRowLookupScript<>))]
+    public sealed class FlavourRow : LoggingRow<FlavourRow.RowFields>, IIdRow, INameRow, IMultiTenantRow
     {
         [DisplayName("Id"), Identity, IdProperty]
-        public int? Id
+        public Int32? Id
         {
             get => fields.Id[this];
             set => fields.Id[this] = value;
         }
 
         [DisplayName("Name"), Size(200), NotNull, QuickSearch, NameProperty]
-        public string Name
+        public String Name
         {
             get => fields.Name[this];
             set => fields.Name[this] = value;
         }
 
         [DisplayName("Description"), Size(1000)]
-        public string Description
+        public String Description
         {
             get => fields.Description[this];
             set => fields.Description[this] = value;
         }
 
-        [DisplayName("Insert Date")]
-        public DateTime? InsertDate
+        [DisplayName("Tenant"), ForeignKey("Tenant", "TenantId"), LeftJoin("jTenant")]
+        [Insertable(false), Updatable(false)]
+        public Int32? TenantId
         {
-            get => fields.InsertDate[this];
-            set => fields.InsertDate[this] = value;
+            get { return Fields.TenantId[this]; }
+            set { Fields.TenantId[this] = value; }
         }
 
-        [DisplayName("Insert User Id")]
-        public int? InsertUserId
+        [DisplayName("Tenant"), Expression("jTenant.TenantName")]
+        public String TenantName
         {
-            get => fields.InsertUserId[this];
-            set => fields.InsertUserId[this] = value;
+            get { return Fields.TenantName[this]; }
+            set { Fields.TenantName[this] = value; }
         }
 
-        [DisplayName("Update Date")]
-        public DateTime? UpdateDate
+        public Int32Field TenantIdField
         {
-            get => fields.UpdateDate[this];
-            set => fields.UpdateDate[this] = value;
-        }
-
-        [DisplayName("Update User Id")]
-        public int? UpdateUserId
-        {
-            get => fields.UpdateUserId[this];
-            set => fields.UpdateUserId[this] = value;
-        }
-
-        [DisplayName("Tenant Id"), NotNull]
-        public int? TenantId
-        {
-            get => fields.TenantId[this];
-            set => fields.TenantId[this] = value;
+            get { return Fields.TenantId; }
         }
 
         public FlavourRow()
@@ -80,16 +67,13 @@ namespace Indotalent.Merchandise
         {
         }
 
-        public class RowFields : RowFieldsBase
+        public class RowFields : LoggingRowFields
         {
             public Int32Field Id;
             public StringField Name;
             public StringField Description;
-            public DateTimeField InsertDate;
-            public Int32Field InsertUserId;
-            public DateTimeField UpdateDate;
-            public Int32Field UpdateUserId;
             public Int32Field TenantId;
+            public StringField TenantName;
         }
     }
 }

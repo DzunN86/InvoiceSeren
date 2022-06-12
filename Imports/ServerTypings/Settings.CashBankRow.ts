@@ -10,21 +10,27 @@
         ZipCode?: string;
         Phone?: string;
         Email?: string;
-        InsertDate?: string;
-        InsertUserId?: number;
-        UpdateDate?: string;
-        UpdateUserId?: number;
         TenantId?: number;
+        TenantName?: string;
+        InsertUserId?: number;
+        InsertDate?: string;
+        UpdateUserId?: number;
+        UpdateDate?: string;
     }
 
     export namespace CashBankRow {
         export const idProperty = 'Id';
         export const nameProperty = 'Name';
         export const localTextPrefix = 'Settings.CashBank';
-        export const deletePermission = 'Administration:General';
-        export const insertPermission = 'Administration:General';
-        export const readPermission = 'Administration:General';
-        export const updatePermission = 'Administration:General';
+        export const lookupKey = 'Settings.CashBank';
+
+        export function getLookup(): Q.Lookup<CashBankRow> {
+            return Q.getLookup<CashBankRow>('Settings.CashBank');
+        }
+        export const deletePermission = 'Settings:CashBank';
+        export const insertPermission = 'Settings:CashBank';
+        export const readPermission = 'Settings:CashBank';
+        export const updatePermission = 'Settings:CashBank';
 
         export declare const enum Fields {
             Id = "Id",
@@ -37,11 +43,12 @@
             ZipCode = "ZipCode",
             Phone = "Phone",
             Email = "Email",
-            InsertDate = "InsertDate",
+            TenantId = "TenantId",
+            TenantName = "TenantName",
             InsertUserId = "InsertUserId",
-            UpdateDate = "UpdateDate",
+            InsertDate = "InsertDate",
             UpdateUserId = "UpdateUserId",
-            TenantId = "TenantId"
+            UpdateDate = "UpdateDate"
         }
     }
 }

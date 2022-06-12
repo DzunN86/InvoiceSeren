@@ -12,21 +12,16 @@ namespace Indotalent.Purchase.Columns
     [BasedOnRow(typeof(VendorRow), CheckNames = true)]
     public class VendorColumns
     {
-        [EditLink, DisplayName("Db.Shared.RecordId"), AlignRight]
-        public int Id { get; set; }
         [EditLink]
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public string Street { get; set; }
-        public string City { get; set; }
-        public string State { get; set; }
-        public string ZipCode { get; set; }
-        public string Phone { get; set; }
-        public string Email { get; set; }
-        public DateTime InsertDate { get; set; }
-        public int InsertUserId { get; set; }
-        public DateTime UpdateDate { get; set; }
-        public int UpdateUserId { get; set; }
-        public int TenantId { get; set; }
+        [Width(200)]
+        public String Name { get; set; }
+        [Width(200)]
+        public String City { get; set; }
+        [Width(200)]
+        public String Street { get; set; }
+        [Width(200)]
+        public String Email { get; set; }
+        [Width(200)]
+        public String TenantName { get; set; }
     }
 }

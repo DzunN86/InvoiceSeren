@@ -1,0 +1,137 @@
+﻿@model Indotalent.Merchandise.ProductPrintData
+
+@if ((bool?)ViewData["Printing"] == true)
+{
+    Layout = "_LayoutNoNavigation";
+}
+
+<section class="invoice">
+    <div class="row">
+        <div class="col-xs-12">
+            <h2 class="page-header">
+                PRODUCT BROCHURE
+                <small class="pull-right">Print at: @DateTime.Now.ToShortDateString()</small>
+            </h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 text-center">
+            <h3>@Model.Header.Name</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 text-center">
+            @if (!String.IsNullOrWhiteSpace(Model.Header.Picture))
+            {
+                <img src="@($"/upload/{Model.Header.Picture}")" height="100" width="200" />
+            }
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <h5>Product Info</h5>
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td>Product Name:</td>
+                        <td>@Model.Header.Name</td>
+                    </tr>
+                    <tr>
+                        <td>Internal Code:</td>
+                        <td>@Model.Header.InternalCode</td>
+                    </tr>
+                    <tr>
+                        <td>Barcode:</td>
+                        <td>@Model.Header.Barcode</td>
+                    </tr>
+                    <tr>
+                        <td>Uom:</td>
+                        <td>@Model.Header.UomName</td>
+                    </tr>
+                    <tr>
+                        <td>Description:</td>
+                        <td>@Model.Header.Description</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-6">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h5>Product Variant</h5>
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <td>Size:</td>
+                                <td>@Model.Header.SizeName</td>
+                            </tr>
+                            <tr>
+                                <td>Colour:</td>
+                                <td>@Model.Header.ColourName</td>
+                            </tr>
+                            <tr>
+                                <td>Flavour:</td>
+                                <td>@Model.Header.FlavourName</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <h5>Product Retail</h5>
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <td>Currency:</td>
+                                <td>@Model.Header.CurrencyName</td>
+                            </tr>
+                            <tr>
+                                <td>Sales Price:</td>
+                                <td>@Model.Header.SalesPrice</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <h5>Product Purchase</h5>
+            <small>Please contact us using below information for purchase and procurement.</small>
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td>Company Name:</td>
+                        <td>@Model.Company.TenantName</td>
+                    </tr>
+                    <tr>
+                        <td>Street Address:</td>
+                        <td>@Model.Company.Street</td>
+                    </tr>
+                    <tr>
+                        <td>City:</td>
+                        <td>@Model.Company.City</td>
+                    </tr>
+                    <tr>
+                        <td>State:</td>
+                        <td>@Model.Company.State</td>
+                    </tr>
+                    <tr>
+                        <td>ZipCode:</td>
+                        <td>@Model.Company.ZipCode</td>
+                    </tr>
+                    <tr>
+                        <td>Phone:</td>
+                        <td>@Model.Company.Phone</td>
+                    </tr>
+                    <tr>
+                        <td>Email:</td>
+                        <td>@Model.Company.Email</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

@@ -1969,3 +1969,7 @@ C:/Users/ASSALAM/KelIII/Indotalent.Web/obj/Debug/net5.0/Indotalent.Web.genruntim
 /home/anyaspyx/Documents/SantriCode/Project/serin-Invoice/obj/Debug/net5.0/ref/Indotalent.Web.dll
 /home/anyaspyx/Documents/SantriCode/Project/serin-Invoice/obj/Debug/net5.0/Indotalent.Web.pdb
 /home/anyaspyx/Documents/SantriCode/Project/serin-Invoice/obj/Debug/net5.0/Indotalent.Web.genruntimeconfig.cache
+/home/anyaspyx/Documents/SantriCode/Project/serin-Invoice/obj/Debug/net5.0/Razor/Modules/Merchandise/Product/ProductPrint.cshtml.g.cs
+/home/anyaspyx/Documents/SantriCode/Project/serin-Invoice/obj/Debug/net5.0/Razor/Modules/Purchase/Bill/BillPrint.cshtml.g.cs
+/home/anyaspyx/Documents/SantriCode/Project/serin-Invoice/obj/Debug/net5.0/Razor/Modules/Purchase/BillPayment/BillPaymentPrint.cshtml.g.cs
+/home/anyaspyx/Documents/SantriCode/Project/serin-Invoice/obj/Debug/net5.0/Razor/Modules/Purchase/PurchaseOrder/PurchaseOrderPrint.cshtml.g.cs

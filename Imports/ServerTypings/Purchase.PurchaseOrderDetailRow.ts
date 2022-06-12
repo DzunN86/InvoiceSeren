@@ -11,20 +11,28 @@
         TaxPercentage?: number;
         TaxAmount?: number;
         Total?: number;
-        InsertDate?: string;
-        InsertUserId?: number;
-        UpdateDate?: string;
-        UpdateUserId?: number;
+        ProductName?: string;
         TenantId?: number;
+        TenantName?: string;
+        InsertUserId?: number;
+        InsertDate?: string;
+        UpdateUserId?: number;
+        UpdateDate?: string;
     }
 
     export namespace PurchaseOrderDetailRow {
         export const idProperty = 'Id';
-        export const localTextPrefix = 'Purchase.PurchaseOrderDetail';
-        export const deletePermission = 'Administration:General';
-        export const insertPermission = 'Administration:General';
-        export const readPermission = 'Administration:General';
-        export const updatePermission = 'Administration:General';
+        export const nameProperty = 'ProductName';
+        export const localTextPrefix = 'PurchaseOrder.PurchaseOrderDetail';
+        export const lookupKey = 'PurchaseOrder.PurchaseOrderDetail';
+
+        export function getLookup(): Q.Lookup<PurchaseOrderDetailRow> {
+            return Q.getLookup<PurchaseOrderDetailRow>('PurchaseOrder.PurchaseOrderDetail');
+        }
+        export const deletePermission = 'Purchase:PurchaseOrder';
+        export const insertPermission = 'Purchase:PurchaseOrder';
+        export const readPermission = 'Purchase:PurchaseOrder';
+        export const updatePermission = 'Purchase:PurchaseOrder';
 
         export declare const enum Fields {
             Id = "Id",
@@ -38,11 +46,13 @@
             TaxPercentage = "TaxPercentage",
             TaxAmount = "TaxAmount",
             Total = "Total",
-            InsertDate = "InsertDate",
+            ProductName = "ProductName",
+            TenantId = "TenantId",
+            TenantName = "TenantName",
             InsertUserId = "InsertUserId",
-            UpdateDate = "UpdateDate",
+            InsertDate = "InsertDate",
             UpdateUserId = "UpdateUserId",
-            TenantId = "TenantId"
+            UpdateDate = "UpdateDate"
         }
     }
 }

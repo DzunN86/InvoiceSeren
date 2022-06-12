@@ -12,15 +12,10 @@ namespace Indotalent.Merchandise.Columns
     [BasedOnRow(typeof(BrandRow), CheckNames = true)]
     public class BrandColumns
     {
-        [EditLink, DisplayName("Db.Shared.RecordId"), AlignRight]
-        public int Id { get; set; }
         [EditLink]
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public DateTime InsertDate { get; set; }
-        public int InsertUserId { get; set; }
-        public DateTime UpdateDate { get; set; }
-        public int UpdateUserId { get; set; }
-        public int TenantId { get; set; }
+        [Width(200)]
+        public String Name { get; set; }
+        [Width(200)]
+        public String TenantName { get; set; }
     }
 }

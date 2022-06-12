@@ -2,163 +2,223 @@
 using Serenity.ComponentModel;
 using Serenity.Data;
 using Serenity.Data.Mapping;
+using Serenity.Extensions.Entities;
 using System;
 using System.ComponentModel;
 using System.IO;
 
 namespace Indotalent.Merchandise
 {
-    [ConnectionKey("Default"), Module("Merchandise"), TableName("Product")]
-    [DisplayName("Product"), InstanceName("Product")]
+    [ConnectionKey("Default"), Module("Merchandise"), TableName("[Product]")]
+    [DisplayName("Products"), InstanceName("Product")]
+    [LookupScript(LookupType = typeof(MultiTenantRowLookupScript<>))]
     [ReadPermission("Merchandise:Product")]
     [ModifyPermission("Merchandise:Product")]
-    public sealed class ProductRow : Row<ProductRow.RowFields>, IIdRow, INameRow
+    public sealed class ProductRow : LoggingRow<ProductRow.RowFields>, IIdRow, INameRow, IMultiTenantRow
     {
         [DisplayName("Id"), Identity, IdProperty]
-        public int? Id
+        public Int32? Id
         {
             get => fields.Id[this];
             set => fields.Id[this] = value;
         }
 
-        [DisplayName("Name"), Size(200), NotNull, QuickSearch, NameProperty]
-        public string Name
+        [DisplayName("Name"), Size(200), NotNull, QuickSearch, NameProperty, DefaultValue("auto")]
+        public String Name
         {
             get => fields.Name[this];
             set => fields.Name[this] = value;
         }
 
         [DisplayName("Description"), Size(1000)]
-        public string Description
+        public String Description
         {
             get => fields.Description[this];
             set => fields.Description[this] = value;
         }
 
-        [DisplayName("Picture"), Size(200)]
-        public string Picture
+        [DisplayName("Picture"), Size(200), ImageUploadEditor(FilenameFormat = "Image/Product/~")]
+        public String Picture
         {
             get => fields.Picture[this];
             set => fields.Picture[this] = value;
         }
 
         [DisplayName("Internal Code"), Size(100)]
-        public string InternalCode
+        public String InternalCode
         {
             get => fields.InternalCode[this];
             set => fields.InternalCode[this] = value;
         }
 
         [DisplayName("Barcode"), Size(100)]
-        public string Barcode
+        public String Barcode
         {
             get => fields.Barcode[this];
             set => fields.Barcode[this] = value;
         }
 
-        [DisplayName("Uom Id"), NotNull]
-        public int? UomId
+        [DisplayName("Uom"), NotNull, ForeignKey("[Uom]", "Id"), LeftJoin("jUom"), TextualField("UomName")]
+        [LookupEditor(typeof(UomRow), InplaceAdd = true)]
+        public Int32? UomId
         {
             get => fields.UomId[this];
             set => fields.UomId[this] = value;
         }
 
-        [DisplayName("Brand Id"), NotNull]
-        public int? BrandId
+        [DisplayName("Brand"), NotNull, ForeignKey("[Brand]", "Id"), LeftJoin("jBrand"), TextualField("BrandName")]
+        [LookupEditor(typeof(BrandRow), InplaceAdd = true)]
+        public Int32? BrandId
         {
             get => fields.BrandId[this];
             set => fields.BrandId[this] = value;
         }
 
-        [DisplayName("Category Id"), NotNull]
-        public int? CategoryId
+        [DisplayName("Category"), NotNull, ForeignKey("[Category]", "Id"), LeftJoin("jCategory"), TextualField("CategoryName")]
+        [LookupEditor(typeof(CategoryRow), InplaceAdd = true)]
+        public Int32? CategoryId
         {
             get => fields.CategoryId[this];
             set => fields.CategoryId[this] = value;
         }
 
-        [DisplayName("Size Id")]
-        public int? SizeId
+        [DisplayName("Size"), ForeignKey("[Size]", "Id"), LeftJoin("jSize"), TextualField("SizeName")]
+        [LookupEditor(typeof(SizeRow), InplaceAdd = true)]
+        public Int32? SizeId
         {
             get => fields.SizeId[this];
             set => fields.SizeId[this] = value;
         }
 
-        [DisplayName("Colour Id")]
-        public int? ColourId
+        [DisplayName("Colour"), ForeignKey("[Colour]", "Id"), LeftJoin("jColour"), TextualField("ColourName")]
+        [LookupEditor(typeof(ColourRow), InplaceAdd = true)]
+        public Int32? ColourId
         {
             get => fields.ColourId[this];
             set => fields.ColourId[this] = value;
         }
 
-        [DisplayName("Flavour Id")]
-        public int? FlavourId
+        [DisplayName("Flavour"), ForeignKey("[Flavour]", "Id"), LeftJoin("jFlavour"), TextualField("FlavourName")]
+        [LookupEditor(typeof(FlavourRow), InplaceAdd = true)]
+        public Int32? FlavourId
         {
             get => fields.FlavourId[this];
             set => fields.FlavourId[this] = value;
         }
 
         [DisplayName("Purchase Price"), NotNull]
-        public double? PurchasePrice
+        [DefaultValue(0)]
+        public Double? PurchasePrice
         {
             get => fields.PurchasePrice[this];
             set => fields.PurchasePrice[this] = value;
         }
 
         [DisplayName("Sales Price"), NotNull]
-        public double? SalesPrice
+        [DefaultValue(0)]
+        public Double? SalesPrice
         {
             get => fields.SalesPrice[this];
             set => fields.SalesPrice[this] = value;
         }
 
-        [DisplayName("Purchase Tax Id"), NotNull]
-        public int? PurchaseTaxId
+        [DisplayName("Purchase Tax"), NotNull, ForeignKey("[PurchaseTax]", "Id"), LeftJoin("jPurchaseTax"), TextualField("PurchaseTaxName")]
+        [LookupEditor(typeof(Settings.PurchaseTaxRow), InplaceAdd = true)]
+        public Int32? PurchaseTaxId
         {
             get => fields.PurchaseTaxId[this];
             set => fields.PurchaseTaxId[this] = value;
         }
 
-        [DisplayName("Sales Tax Id"), NotNull]
-        public int? SalesTaxId
+        [DisplayName("Sales Tax"), NotNull, ForeignKey("[SalesTax]", "Id"), LeftJoin("jSalesTax"), TextualField("SalesTaxName")]
+        [LookupEditor(typeof(Settings.SalesTaxRow), InplaceAdd = true)]
+        public Int32? SalesTaxId
         {
             get => fields.SalesTaxId[this];
             set => fields.SalesTaxId[this] = value;
         }
 
-        [DisplayName("Insert Date")]
-        public DateTime? InsertDate
+        [DisplayName("Uom"), Expression("jUom.[Name]")]
+        public String UomName
         {
-            get => fields.InsertDate[this];
-            set => fields.InsertDate[this] = value;
+            get => fields.UomName[this];
+            set => fields.UomName[this] = value;
         }
 
-        [DisplayName("Insert User Id")]
-        public int? InsertUserId
+        [DisplayName("Brand"), Expression("jBrand.[Name]")]
+        public String BrandName
         {
-            get => fields.InsertUserId[this];
-            set => fields.InsertUserId[this] = value;
+            get => fields.BrandName[this];
+            set => fields.BrandName[this] = value;
         }
 
-        [DisplayName("Update Date")]
-        public DateTime? UpdateDate
+        [DisplayName("Category"), Expression("jCategory.[Name]")]
+        public String CategoryName
         {
-            get => fields.UpdateDate[this];
-            set => fields.UpdateDate[this] = value;
+            get => fields.CategoryName[this];
+            set => fields.CategoryName[this] = value;
         }
 
-        [DisplayName("Update User Id")]
-        public int? UpdateUserId
+        [DisplayName("Size"), Expression("jSize.[Name]")]
+        public String SizeName
         {
-            get => fields.UpdateUserId[this];
-            set => fields.UpdateUserId[this] = value;
+            get => fields.SizeName[this];
+            set => fields.SizeName[this] = value;
         }
 
-        [DisplayName("Tenant Id"), NotNull]
-        public int? TenantId
+        [DisplayName("Colour"), Expression("jColour.[Name]")]
+        public String ColourName
         {
-            get => fields.TenantId[this];
-            set => fields.TenantId[this] = value;
+            get => fields.ColourName[this];
+            set => fields.ColourName[this] = value;
+        }
+
+        [DisplayName("Flavour"), Expression("jFlavour.[Name]")]
+        public String FlavourName
+        {
+            get => fields.FlavourName[this];
+            set => fields.FlavourName[this] = value;
+        }
+
+        [DisplayName("Purchase Tax"), Expression("jPurchaseTax.[Name]")]
+        public String PurchaseTaxName
+        {
+            get => fields.PurchaseTaxName[this];
+            set => fields.PurchaseTaxName[this] = value;
+        }
+
+        [DisplayName("Sales Tax"), Expression("jSalesTax.[Name]")]
+        public String SalesTaxName
+        {
+            get => fields.SalesTaxName[this];
+            set => fields.SalesTaxName[this] = value;
+        }
+
+        [DisplayName("Tenant"), ForeignKey("Tenant", "TenantId"), LeftJoin("jTenant")]
+        [Insertable(false), Updatable(false)]
+        public Int32? TenantId
+        {
+            get { return Fields.TenantId[this]; }
+            set { Fields.TenantId[this] = value; }
+        }
+
+        [DisplayName("Tenant"), Expression("jTenant.TenantName")]
+        public String TenantName
+        {
+            get { return Fields.TenantName[this]; }
+            set { Fields.TenantName[this] = value; }
+        }
+
+        [DisplayName("Currency"), Size(10), Expression("jTenant.Currency"), Insertable(false), Updatable(false)]
+        public String CurrencyName
+        {
+            get => fields.CurrencyName[this];
+            set => fields.CurrencyName[this] = value;
+        }
+
+        public Int32Field TenantIdField
+        {
+            get { return Fields.TenantId; }
         }
 
         public ProductRow()
@@ -171,7 +231,7 @@ namespace Indotalent.Merchandise
         {
         }
 
-        public class RowFields : RowFieldsBase
+        public class RowFields : LoggingRowFields
         {
             public Int32Field Id;
             public StringField Name;
@@ -189,11 +249,27 @@ namespace Indotalent.Merchandise
             public DoubleField SalesPrice;
             public Int32Field PurchaseTaxId;
             public Int32Field SalesTaxId;
-            public DateTimeField InsertDate;
-            public Int32Field InsertUserId;
-            public DateTimeField UpdateDate;
-            public Int32Field UpdateUserId;
+
+            public StringField UomName;
+
+            public StringField BrandName;
+
+            public StringField CategoryName;
+
+            public StringField SizeName;
+
+            public StringField ColourName;
+
+            public StringField FlavourName;
+
+            public StringField PurchaseTaxName;
+
+            public StringField SalesTaxName;
+
+            public StringField CurrencyName;
+
             public Int32Field TenantId;
+            public StringField TenantName;
         }
     }
 }

@@ -13,6 +13,28 @@ namespace Indotalent.Merchandise {
         protected getUpdatePermission() { return CategoryRow.updatePermission; }
 
         protected form = new CategoryForm(this.idPrefix);
+        private loadedState: string;
+
+        constructor() {
+            super();
+
+            Indotalent.DialogUtils.pendingChangesConfirmation(this.element, () => this.getSaveState() != this.loadedState);
+        }
+
+
+        getSaveState() {
+            try {
+                return $.toJSON(this.getSaveEntity());
+            }
+            catch (e) {
+                return null;
+            }
+        }
+
+        loadResponse(data) {
+            super.loadResponse(data);
+            this.loadedState = this.getSaveState();
+        }
 
     }
 }

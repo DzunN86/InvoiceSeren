@@ -12,16 +12,12 @@ namespace Indotalent.Settings.Columns
     [BasedOnRow(typeof(SalesTaxRow), CheckNames = true)]
     public class SalesTaxColumns
     {
-        [EditLink, DisplayName("Db.Shared.RecordId"), AlignRight]
-        public int Id { get; set; }
         [EditLink]
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public double TaxRatePercentage { get; set; }
-        public DateTime InsertDate { get; set; }
-        public int InsertUserId { get; set; }
-        public DateTime UpdateDate { get; set; }
-        public int UpdateUserId { get; set; }
-        public int TenantId { get; set; }
+        [Width(200)]
+        public String Name { get; set; }
+        [Width(200)]
+        public Double TaxRatePercentage { get; set; }
+        [Width(200)]
+        public String TenantName { get; set; }
     }
 }

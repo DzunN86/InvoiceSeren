@@ -12,19 +12,22 @@ namespace Indotalent.Settings.Forms
     [BasedOnRow(typeof(CashBankRow), CheckNames = true)]
     public class CashBankForm
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public string AccountNumber { get; set; }
-        public string Street { get; set; }
-        public string City { get; set; }
-        public string State { get; set; }
-        public string ZipCode { get; set; }
-        public string Phone { get; set; }
-        public string Email { get; set; }
-        public DateTime InsertDate { get; set; }
-        public int InsertUserId { get; set; }
-        public DateTime UpdateDate { get; set; }
-        public int UpdateUserId { get; set; }
-        public int TenantId { get; set; }
+        [Tab("General")]
+        [Category("Cash & Bank")]
+        public String Name { get; set; }
+        [TextAreaEditor(Rows = 3)]
+        public String Description { get; set; }
+
+        [Category("Account")]
+        public String AccountNumber { get; set; }
+
+        [Tab("Address")]
+        [Category("Main")]
+        public String Street { get; set; }
+        public String City { get; set; }
+        public String State { get; set; }
+        public String ZipCode { get; set; }
+        public String Phone { get; set; }
+        public String Email { get; set; }
     }
 }

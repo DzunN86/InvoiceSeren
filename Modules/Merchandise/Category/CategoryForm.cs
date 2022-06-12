@@ -12,12 +12,10 @@ namespace Indotalent.Merchandise.Forms
     [BasedOnRow(typeof(CategoryRow), CheckNames = true)]
     public class CategoryForm
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public DateTime InsertDate { get; set; }
-        public int InsertUserId { get; set; }
-        public DateTime UpdateDate { get; set; }
-        public int UpdateUserId { get; set; }
-        public int TenantId { get; set; }
+        [Tab("General")]
+        [Category("Size for Variant")]
+        public String Name { get; set; }
+        [TextAreaEditor(Rows = 3)]
+        public String Description { get; set; }
     }
 }

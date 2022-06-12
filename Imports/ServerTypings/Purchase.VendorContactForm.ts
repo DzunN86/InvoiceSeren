@@ -1,19 +1,13 @@
 ﻿namespace Indotalent.Purchase {
     export interface VendorContactForm {
-        VendorId: Serenity.IntegerEditor;
         Name: Serenity.StringEditor;
-        Description: Serenity.StringEditor;
+        Description: Serenity.TextAreaEditor;
         Street: Serenity.StringEditor;
         City: Serenity.StringEditor;
         State: Serenity.StringEditor;
         ZipCode: Serenity.StringEditor;
         Phone: Serenity.StringEditor;
         Email: Serenity.StringEditor;
-        InsertDate: Serenity.DateEditor;
-        InsertUserId: Serenity.IntegerEditor;
-        UpdateDate: Serenity.DateEditor;
-        UpdateUserId: Serenity.IntegerEditor;
-        TenantId: Serenity.IntegerEditor;
     }
 
     export class VendorContactForm extends Serenity.PrefixedContext {
@@ -27,25 +21,18 @@
                 VendorContactForm.init = true;
 
                 var s = Serenity;
-                var w0 = s.IntegerEditor;
-                var w1 = s.StringEditor;
-                var w2 = s.DateEditor;
+                var w0 = s.StringEditor;
+                var w1 = s.TextAreaEditor;
 
                 Q.initFormType(VendorContactForm, [
-                    'VendorId', w0,
-                    'Name', w1,
+                    'Name', w0,
                     'Description', w1,
-                    'Street', w1,
-                    'City', w1,
-                    'State', w1,
-                    'ZipCode', w1,
-                    'Phone', w1,
-                    'Email', w1,
-                    'InsertDate', w2,
-                    'InsertUserId', w0,
-                    'UpdateDate', w2,
-                    'UpdateUserId', w0,
-                    'TenantId', w0
+                    'Street', w0,
+                    'City', w0,
+                    'State', w0,
+                    'ZipCode', w0,
+                    'Phone', w0,
+                    'Email', w0
                 ]);
             }
         }

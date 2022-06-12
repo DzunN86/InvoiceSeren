@@ -1,7 +1,7 @@
 ﻿namespace Indotalent.Settings {
     export interface MyCompanyForm {
         TenantName: Serenity.StringEditor;
-        Description: Serenity.StringEditor;
+        Description: Serenity.TextAreaEditor;
         Currency: Serenity.StringEditor;
         Street: Serenity.StringEditor;
         City: Serenity.StringEditor;
@@ -10,37 +10,33 @@
         Phone: Serenity.StringEditor;
         Email: Serenity.StringEditor;
         ProductNumberPrefix: Serenity.StringEditor;
-        ProductNumberUseDate: Serenity.IntegerEditor;
+        ProductNumberUseDate: Serenity.BooleanEditor;
         ProductNumberLength: Serenity.IntegerEditor;
         CustomerNumberPrefix: Serenity.StringEditor;
-        CustomerNumberUseDate: Serenity.IntegerEditor;
+        CustomerNumberUseDate: Serenity.BooleanEditor;
         CustomerNumberLength: Serenity.IntegerEditor;
         SalesNumberPrefix: Serenity.StringEditor;
-        SalesNumberUseDate: Serenity.IntegerEditor;
+        SalesNumberUseDate: Serenity.BooleanEditor;
         SalesNumberLength: Serenity.IntegerEditor;
         InvoiceNumberPrefix: Serenity.StringEditor;
-        InvoiceNumberUseDate: Serenity.IntegerEditor;
+        InvoiceNumberUseDate: Serenity.BooleanEditor;
         InvoiceNumberLength: Serenity.IntegerEditor;
         InvoicePaymentNumberPrefix: Serenity.StringEditor;
-        InvoicePaymentNumberUseDate: Serenity.IntegerEditor;
+        InvoicePaymentNumberUseDate: Serenity.BooleanEditor;
         InvoicePaymentNumberLength: Serenity.IntegerEditor;
         VendorNumberPrefix: Serenity.StringEditor;
-        VendorNumberUseDate: Serenity.IntegerEditor;
+        VendorNumberUseDate: Serenity.BooleanEditor;
         VendorNumberLength: Serenity.IntegerEditor;
         PurchaseNumberPrefix: Serenity.StringEditor;
-        PurchaseNumberUseDate: Serenity.IntegerEditor;
+        PurchaseNumberUseDate: Serenity.BooleanEditor;
         PurchaseNumberLength: Serenity.IntegerEditor;
         BillNumberPrefix: Serenity.StringEditor;
-        BillNumberUseDate: Serenity.IntegerEditor;
+        BillNumberUseDate: Serenity.BooleanEditor;
         BillNumberLength: Serenity.IntegerEditor;
         BillPaymentNumberPrefix: Serenity.StringEditor;
-        BillPaymentNumberUseDate: Serenity.IntegerEditor;
+        BillPaymentNumberUseDate: Serenity.BooleanEditor;
         BillPaymentNumberLength: Serenity.IntegerEditor;
         MaximumUser: Serenity.IntegerEditor;
-        InsertDate: Serenity.DateEditor;
-        InsertUserId: Serenity.IntegerEditor;
-        UpdateDate: Serenity.DateEditor;
-        UpdateUserId: Serenity.IntegerEditor;
     }
 
     export class MyCompanyForm extends Serenity.PrefixedContext {
@@ -55,12 +51,13 @@
 
                 var s = Serenity;
                 var w0 = s.StringEditor;
-                var w1 = s.IntegerEditor;
-                var w2 = s.DateEditor;
+                var w1 = s.TextAreaEditor;
+                var w2 = s.BooleanEditor;
+                var w3 = s.IntegerEditor;
 
                 Q.initFormType(MyCompanyForm, [
                     'TenantName', w0,
-                    'Description', w0,
+                    'Description', w1,
                     'Currency', w0,
                     'Street', w0,
                     'City', w0,
@@ -69,37 +66,33 @@
                     'Phone', w0,
                     'Email', w0,
                     'ProductNumberPrefix', w0,
-                    'ProductNumberUseDate', w1,
-                    'ProductNumberLength', w1,
+                    'ProductNumberUseDate', w2,
+                    'ProductNumberLength', w3,
                     'CustomerNumberPrefix', w0,
-                    'CustomerNumberUseDate', w1,
-                    'CustomerNumberLength', w1,
+                    'CustomerNumberUseDate', w2,
+                    'CustomerNumberLength', w3,
                     'SalesNumberPrefix', w0,
-                    'SalesNumberUseDate', w1,
-                    'SalesNumberLength', w1,
+                    'SalesNumberUseDate', w2,
+                    'SalesNumberLength', w3,
                     'InvoiceNumberPrefix', w0,
-                    'InvoiceNumberUseDate', w1,
-                    'InvoiceNumberLength', w1,
+                    'InvoiceNumberUseDate', w2,
+                    'InvoiceNumberLength', w3,
                     'InvoicePaymentNumberPrefix', w0,
-                    'InvoicePaymentNumberUseDate', w1,
-                    'InvoicePaymentNumberLength', w1,
+                    'InvoicePaymentNumberUseDate', w2,
+                    'InvoicePaymentNumberLength', w3,
                     'VendorNumberPrefix', w0,
-                    'VendorNumberUseDate', w1,
-                    'VendorNumberLength', w1,
+                    'VendorNumberUseDate', w2,
+                    'VendorNumberLength', w3,
                     'PurchaseNumberPrefix', w0,
-                    'PurchaseNumberUseDate', w1,
-                    'PurchaseNumberLength', w1,
+                    'PurchaseNumberUseDate', w2,
+                    'PurchaseNumberLength', w3,
                     'BillNumberPrefix', w0,
-                    'BillNumberUseDate', w1,
-                    'BillNumberLength', w1,
+                    'BillNumberUseDate', w2,
+                    'BillNumberLength', w3,
                     'BillPaymentNumberPrefix', w0,
-                    'BillPaymentNumberUseDate', w1,
-                    'BillPaymentNumberLength', w1,
-                    'MaximumUser', w1,
-                    'InsertDate', w2,
-                    'InsertUserId', w1,
-                    'UpdateDate', w2,
-                    'UpdateUserId', w1
+                    'BillPaymentNumberUseDate', w2,
+                    'BillPaymentNumberLength', w3,
+                    'MaximumUser', w3
                 ]);
             }
         }

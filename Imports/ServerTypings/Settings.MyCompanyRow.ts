@@ -10,38 +10,38 @@
         ZipCode?: string;
         Phone?: string;
         Email?: string;
+        MaximumUser?: number;
         ProductNumberPrefix?: string;
-        ProductNumberUseDate?: number;
+        ProductNumberUseDate?: boolean;
         ProductNumberLength?: number;
         CustomerNumberPrefix?: string;
-        CustomerNumberUseDate?: number;
+        CustomerNumberUseDate?: boolean;
         CustomerNumberLength?: number;
         SalesNumberPrefix?: string;
-        SalesNumberUseDate?: number;
+        SalesNumberUseDate?: boolean;
         SalesNumberLength?: number;
         InvoiceNumberPrefix?: string;
-        InvoiceNumberUseDate?: number;
+        InvoiceNumberUseDate?: boolean;
         InvoiceNumberLength?: number;
         InvoicePaymentNumberPrefix?: string;
-        InvoicePaymentNumberUseDate?: number;
+        InvoicePaymentNumberUseDate?: boolean;
         InvoicePaymentNumberLength?: number;
         VendorNumberPrefix?: string;
-        VendorNumberUseDate?: number;
+        VendorNumberUseDate?: boolean;
         VendorNumberLength?: number;
         PurchaseNumberPrefix?: string;
-        PurchaseNumberUseDate?: number;
+        PurchaseNumberUseDate?: boolean;
         PurchaseNumberLength?: number;
         BillNumberPrefix?: string;
-        BillNumberUseDate?: number;
+        BillNumberUseDate?: boolean;
         BillNumberLength?: number;
         BillPaymentNumberPrefix?: string;
-        BillPaymentNumberUseDate?: number;
+        BillPaymentNumberUseDate?: boolean;
         BillPaymentNumberLength?: number;
-        MaximumUser?: number;
-        InsertDate?: string;
         InsertUserId?: number;
-        UpdateDate?: string;
+        InsertDate?: string;
         UpdateUserId?: number;
+        UpdateDate?: string;
     }
 
     export namespace MyCompanyRow {
@@ -64,6 +64,7 @@
             ZipCode = "ZipCode",
             Phone = "Phone",
             Email = "Email",
+            MaximumUser = "MaximumUser",
             ProductNumberPrefix = "ProductNumberPrefix",
             ProductNumberUseDate = "ProductNumberUseDate",
             ProductNumberLength = "ProductNumberLength",
@@ -91,11 +92,10 @@
             BillPaymentNumberPrefix = "BillPaymentNumberPrefix",
             BillPaymentNumberUseDate = "BillPaymentNumberUseDate",
             BillPaymentNumberLength = "BillPaymentNumberLength",
-            MaximumUser = "MaximumUser",
-            InsertDate = "InsertDate",
             InsertUserId = "InsertUserId",
-            UpdateDate = "UpdateDate",
-            UpdateUserId = "UpdateUserId"
+            InsertDate = "InsertDate",
+            UpdateUserId = "UpdateUserId",
+            UpdateDate = "UpdateDate"
         }
     }
 }

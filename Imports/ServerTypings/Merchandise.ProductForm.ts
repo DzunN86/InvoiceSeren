@@ -1,25 +1,21 @@
 ﻿namespace Indotalent.Merchandise {
     export interface ProductForm {
         Name: Serenity.StringEditor;
-        Description: Serenity.StringEditor;
-        Picture: Serenity.StringEditor;
         InternalCode: Serenity.StringEditor;
         Barcode: Serenity.StringEditor;
-        UomId: Serenity.IntegerEditor;
-        BrandId: Serenity.IntegerEditor;
-        CategoryId: Serenity.IntegerEditor;
-        SizeId: Serenity.IntegerEditor;
-        ColourId: Serenity.IntegerEditor;
-        FlavourId: Serenity.IntegerEditor;
+        Description: Serenity.TextAreaEditor;
+        UomId: Serenity.LookupEditor;
+        Picture: Serenity.ImageUploadEditor;
+        BrandId: Serenity.LookupEditor;
+        CategoryId: Serenity.LookupEditor;
+        SizeId: Serenity.LookupEditor;
+        ColourId: Serenity.LookupEditor;
+        FlavourId: Serenity.LookupEditor;
+        CurrencyName: Serenity.StringEditor;
         PurchasePrice: Serenity.DecimalEditor;
+        PurchaseTaxId: Serenity.LookupEditor;
         SalesPrice: Serenity.DecimalEditor;
-        PurchaseTaxId: Serenity.IntegerEditor;
-        SalesTaxId: Serenity.IntegerEditor;
-        InsertDate: Serenity.DateEditor;
-        InsertUserId: Serenity.IntegerEditor;
-        UpdateDate: Serenity.DateEditor;
-        UpdateUserId: Serenity.IntegerEditor;
-        TenantId: Serenity.IntegerEditor;
+        SalesTaxId: Serenity.LookupEditor;
     }
 
     export class ProductForm extends Serenity.PrefixedContext {
@@ -34,31 +30,28 @@
 
                 var s = Serenity;
                 var w0 = s.StringEditor;
-                var w1 = s.IntegerEditor;
-                var w2 = s.DecimalEditor;
-                var w3 = s.DateEditor;
+                var w1 = s.TextAreaEditor;
+                var w2 = s.LookupEditor;
+                var w3 = s.ImageUploadEditor;
+                var w4 = s.DecimalEditor;
 
                 Q.initFormType(ProductForm, [
                     'Name', w0,
-                    'Description', w0,
-                    'Picture', w0,
                     'InternalCode', w0,
                     'Barcode', w0,
-                    'UomId', w1,
-                    'BrandId', w1,
-                    'CategoryId', w1,
-                    'SizeId', w1,
-                    'ColourId', w1,
-                    'FlavourId', w1,
-                    'PurchasePrice', w2,
-                    'SalesPrice', w2,
-                    'PurchaseTaxId', w1,
-                    'SalesTaxId', w1,
-                    'InsertDate', w3,
-                    'InsertUserId', w1,
-                    'UpdateDate', w3,
-                    'UpdateUserId', w1,
-                    'TenantId', w1
+                    'Description', w1,
+                    'UomId', w2,
+                    'Picture', w3,
+                    'BrandId', w2,
+                    'CategoryId', w2,
+                    'SizeId', w2,
+                    'ColourId', w2,
+                    'FlavourId', w2,
+                    'CurrencyName', w0,
+                    'PurchasePrice', w4,
+                    'PurchaseTaxId', w2,
+                    'SalesPrice', w4,
+                    'SalesTaxId', w2
                 ]);
             }
         }

@@ -13,5 +13,15 @@ namespace Indotalent.Purchase {
         constructor(container: JQuery) {
             super(container);
         }
+
+        protected getColumns() {
+            let columns = super.getColumns();
+
+            if (!Q.Authorization.hasPermission("Administration:Tenant")) {
+                columns = columns.filter(x => x.field != VendorContactRow.Fields.TenantName && x.field != VendorContactRow.Fields.Id);
+            }
+
+            return columns;
+        }
     }
 }

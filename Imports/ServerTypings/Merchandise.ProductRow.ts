@@ -16,17 +16,32 @@
         SalesPrice?: number;
         PurchaseTaxId?: number;
         SalesTaxId?: number;
-        InsertDate?: string;
-        InsertUserId?: number;
-        UpdateDate?: string;
-        UpdateUserId?: number;
+        UomName?: string;
+        BrandName?: string;
+        CategoryName?: string;
+        SizeName?: string;
+        ColourName?: string;
+        FlavourName?: string;
+        PurchaseTaxName?: string;
+        SalesTaxName?: string;
+        CurrencyName?: string;
         TenantId?: number;
+        TenantName?: string;
+        InsertUserId?: number;
+        InsertDate?: string;
+        UpdateUserId?: number;
+        UpdateDate?: string;
     }
 
     export namespace ProductRow {
         export const idProperty = 'Id';
         export const nameProperty = 'Name';
         export const localTextPrefix = 'Merchandise.Product';
+        export const lookupKey = 'Merchandise.Product';
+
+        export function getLookup(): Q.Lookup<ProductRow> {
+            return Q.getLookup<ProductRow>('Merchandise.Product');
+        }
         export const deletePermission = 'Merchandise:Product';
         export const insertPermission = 'Merchandise:Product';
         export const readPermission = 'Merchandise:Product';
@@ -49,11 +64,21 @@
             SalesPrice = "SalesPrice",
             PurchaseTaxId = "PurchaseTaxId",
             SalesTaxId = "SalesTaxId",
-            InsertDate = "InsertDate",
+            UomName = "UomName",
+            BrandName = "BrandName",
+            CategoryName = "CategoryName",
+            SizeName = "SizeName",
+            ColourName = "ColourName",
+            FlavourName = "FlavourName",
+            PurchaseTaxName = "PurchaseTaxName",
+            SalesTaxName = "SalesTaxName",
+            CurrencyName = "CurrencyName",
+            TenantId = "TenantId",
+            TenantName = "TenantName",
             InsertUserId = "InsertUserId",
-            UpdateDate = "UpdateDate",
+            InsertDate = "InsertDate",
             UpdateUserId = "UpdateUserId",
-            TenantId = "TenantId"
+            UpdateDate = "UpdateDate"
         }
     }
 }

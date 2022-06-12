@@ -1,0 +1,115 @@
+﻿@model Indotalent.Purchase.BillPaymentPrintData
+
+@if ((bool?)ViewData["Printing"] == true)
+{
+    Layout = "_LayoutNoNavigation";
+}
+
+<section class="invoice">
+    <div class="row">
+        <div class="col-xs-12">
+            <h2 class="page-header">
+                PAYMENT VOUCHER (DISBURSE)
+                <small class="pull-right">Print at: @DateTime.Now.ToShortDateString()</small>
+            </h2>
+        </div>
+    </div>
+    <!-- info row -->
+    <div class="row invoice-info">
+        <!-- /.col -->
+        <div class="col-sm-4 invoice-col">
+            Disburse Payment To
+            <address>
+                <strong>@Model.Vendor.Name</strong><br>
+                @Model.Vendor.Street<br>
+                @Model.Vendor.City @Model.Vendor.State @Model.Vendor.ZipCode<br>
+                Phone: @Model.Vendor.Phone<br>
+                Email: @Model.Vendor.Email
+            </address>
+        </div>
+        <!-- /.col -->
+        <div class="col-sm-4 invoice-col">
+            Payment Number:<br>
+            @Model.Header.Number<br>
+            Payment Date:<br>
+            @Model.Header.PaymentDate.Value.ToShortDateString()<br>
+        </div>
+        <!-- /.col -->
+        <div class="col-sm-4 invoice-col">
+            Bill Number:<br>
+            @Model.Header.BillNumber<br>
+            Amount Bill:<br>
+            @Model.Company.Currency @Model.Header.BillAmount.Value.ToString("#,##0.00")
+        </div>
+    </div>
+    <!-- /.row -->
+    <!-- Table row -->
+    <div class="row">
+        <div class="col-xs-12 table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Info</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Payment Amount:</td>
+                        <td>@Model.Company.Currency @Model.Header.PaymentAmount.Value.ToString("#,##0.00")</td>
+                    </tr>
+                    <tr>
+                        <td>Payment Mode:</td>
+                        <td>@Model.Header.CashBankName</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- /.col -->
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-xs-12">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th class="text-center">Prepared By</th>
+                        <th class="text-center">Approved By</th>
+                        <th class="text-center">Processed By</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                        </td>
+                        <td>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                        </td>
+                        <td>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

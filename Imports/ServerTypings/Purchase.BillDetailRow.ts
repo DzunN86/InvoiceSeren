@@ -11,20 +11,28 @@
         TaxPercentage?: number;
         TaxAmount?: number;
         Total?: number;
-        InsertDate?: string;
-        InsertUserId?: number;
-        UpdateDate?: string;
-        UpdateUserId?: number;
+        ProductName?: string;
         TenantId?: number;
+        TenantName?: string;
+        InsertUserId?: number;
+        InsertDate?: string;
+        UpdateUserId?: number;
+        UpdateDate?: string;
     }
 
     export namespace BillDetailRow {
         export const idProperty = 'Id';
+        export const nameProperty = 'ProductName';
         export const localTextPrefix = 'Purchase.BillDetail';
-        export const deletePermission = 'Administration:General';
-        export const insertPermission = 'Administration:General';
-        export const readPermission = 'Administration:General';
-        export const updatePermission = 'Administration:General';
+        export const lookupKey = 'Purchase.BillDetail';
+
+        export function getLookup(): Q.Lookup<BillDetailRow> {
+            return Q.getLookup<BillDetailRow>('Purchase.BillDetail');
+        }
+        export const deletePermission = 'Purchase:Bill';
+        export const insertPermission = 'Purchase:Bill';
+        export const readPermission = 'Purchase:Bill';
+        export const updatePermission = 'Purchase:Bill';
 
         export declare const enum Fields {
             Id = "Id",
@@ -38,11 +46,13 @@
             TaxPercentage = "TaxPercentage",
             TaxAmount = "TaxAmount",
             Total = "Total",
-            InsertDate = "InsertDate",
+            ProductName = "ProductName",
+            TenantId = "TenantId",
+            TenantName = "TenantName",
             InsertUserId = "InsertUserId",
-            UpdateDate = "UpdateDate",
+            InsertDate = "InsertDate",
             UpdateUserId = "UpdateUserId",
-            TenantId = "TenantId"
+            UpdateDate = "UpdateDate"
         }
     }
 }

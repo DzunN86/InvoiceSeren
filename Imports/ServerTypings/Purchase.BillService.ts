@@ -7,13 +7,15 @@
         export declare function Delete(request: Serenity.DeleteRequest, onSuccess?: (response: Serenity.DeleteResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         export declare function Retrieve(request: Serenity.RetrieveRequest, onSuccess?: (response: Serenity.RetrieveResponse<BillRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         export declare function List(request: Serenity.ListRequest, onSuccess?: (response: Serenity.ListResponse<BillRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        export declare function Currency(request: BillCurrencyRequest, onSuccess?: (response: BillCurrencyResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
 
         export declare const enum Methods {
             Create = "Purchase/Bill/Create",
             Update = "Purchase/Bill/Update",
             Delete = "Purchase/Bill/Delete",
             Retrieve = "Purchase/Bill/Retrieve",
-            List = "Purchase/Bill/List"
+            List = "Purchase/Bill/List",
+            Currency = "Purchase/Bill/Currency"
         }
 
         [
@@ -21,7 +23,8 @@
             'Update', 
             'Delete', 
             'Retrieve', 
-            'List'
+            'List', 
+            'Currency'
         ].forEach(x => {
             (<any>BillService)[x] = function (r, s, o) {
                 return Q.serviceRequest(baseUrl + '/' + x, r, s, o);

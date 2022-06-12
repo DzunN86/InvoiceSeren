@@ -9,21 +9,28 @@
         ZipCode?: string;
         Phone?: string;
         Email?: string;
-        InsertDate?: string;
-        InsertUserId?: number;
-        UpdateDate?: string;
-        UpdateUserId?: number;
         TenantId?: number;
+        TenantName?: string;
+        ContactList?: VendorContactRow[];
+        InsertUserId?: number;
+        InsertDate?: string;
+        UpdateUserId?: number;
+        UpdateDate?: string;
     }
 
     export namespace VendorRow {
         export const idProperty = 'Id';
         export const nameProperty = 'Name';
         export const localTextPrefix = 'Purchase.Vendor';
-        export const deletePermission = 'Administration:General';
-        export const insertPermission = 'Administration:General';
-        export const readPermission = 'Administration:General';
-        export const updatePermission = 'Administration:General';
+        export const lookupKey = 'Purchase.Vendor';
+
+        export function getLookup(): Q.Lookup<VendorRow> {
+            return Q.getLookup<VendorRow>('Purchase.Vendor');
+        }
+        export const deletePermission = 'Purchase:Vendor';
+        export const insertPermission = 'Purchase:Vendor';
+        export const readPermission = 'Purchase:Vendor';
+        export const updatePermission = 'Purchase:Vendor';
 
         export declare const enum Fields {
             Id = "Id",
@@ -35,11 +42,13 @@
             ZipCode = "ZipCode",
             Phone = "Phone",
             Email = "Email",
-            InsertDate = "InsertDate",
+            TenantId = "TenantId",
+            TenantName = "TenantName",
+            ContactList = "ContactList",
             InsertUserId = "InsertUserId",
-            UpdateDate = "UpdateDate",
+            InsertDate = "InsertDate",
             UpdateUserId = "UpdateUserId",
-            TenantId = "TenantId"
+            UpdateDate = "UpdateDate"
         }
     }
 }

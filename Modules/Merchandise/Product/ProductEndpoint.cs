@@ -59,5 +59,12 @@ namespace Indotalent.Merchandise.Endpoints
             return ExcelContentResult.Create(bytes, "ProductList_" +
                 DateTime.Now.ToString("yyyyMMdd_HHmmss", CultureInfo.InvariantCulture) + ".xlsx");
         }
+
+        [HttpPost]
+        public ProductCurrencyResponse Currency(IDbConnection connection, ProductCurrencyRequest request,
+            [FromServices] IProductCurrencyHandler handler)
+        {
+            return handler.Currency(connection, request);
+        }
     }
 }

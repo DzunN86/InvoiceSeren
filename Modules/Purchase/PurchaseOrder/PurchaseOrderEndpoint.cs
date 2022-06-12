@@ -59,5 +59,12 @@ namespace Indotalent.Purchase.Endpoints
             return ExcelContentResult.Create(bytes, "PurchaseOrderList_" +
                 DateTime.Now.ToString("yyyyMMdd_HHmmss", CultureInfo.InvariantCulture) + ".xlsx");
         }
+
+        [HttpPost]
+        public PurchaseOrderCurrencyResponse Currency(IDbConnection connection, PurchaseOrderCurrencyRequest request,
+            [FromServices] IPurchaseOrderCurrencyHandler handler)
+        {
+            return handler.Currency(connection, request);
+        }
     }
 }
