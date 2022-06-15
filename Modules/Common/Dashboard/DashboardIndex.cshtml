@@ -86,6 +86,21 @@
     right: 10px;
     font-size: 64px;
 }
+.small-box-footer {
+  position: relative;
+  text-align: center;
+  padding: 3px 0;
+  color: #fff;
+  color: rgba(255, 255, 255, 0.8);
+  display: block;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+}
+.small-box-footer:hover {
+  color: #fff;
+  background: rgba(0, 0, 0, 0.15);
+}
 
 .bg-world-map {
     background: #3c8dbc;
@@ -98,54 +113,46 @@
 
 
 <div class="row">
-    <div class="col-lg-3 col-sm-6">
-        <div class="card s-dashboard-card-sm bg-primary bg-opacity-50">
+    <div class="col-lg-4 col-sm-6">
+        <div class="card s-dashboard-card-sm bg-primary text-white">
             <div class="card-body">
-                <h3>@Model.OpenOrders</h3>
-                <p>Open Orders</p>
+                <h3>@Model.CurrentMonthSales.Amount.ToString("##,##,00")</h3>
+                <p>Sales Order (@Model.Currency)</p>
+            </div>
+            <div class="icon">
+                <i class="fa fa-shopping-bag"></i>
+            </div>
+            <a href="~/Sales/SalesOrder" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+    <div class="col-lg-4 col-sm-6">
+        <div class="card s-dashboard-card-sm s-alt bg-info text-white">
+            <div class="card-body">
+                <h3>@Model.CurrentMonthPurchase.Amount.ToString("##,##,00")</h3>
+                <p>Purchase Order (@Model.Currency)</p>
             </div>
             <div class="icon">
                 <i class="fa fa-shopping-cart"></i>
             </div>
+            <a href="~/Purchase/PurchaseOrder" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
         </div>
     </div>
-    <div class="col-lg-3 col-sm-6">
-        <div class="card s-dashboard-card-sm s-alt bg-info bg-opacity-50">
+    <div class="col-lg-4 col-sm-6">
+        <div class="card s-dashboard-card-sm bg-warning text-white">
             <div class="card-body">
-                <h3>@Model.ClosedOrderPercent<sup style="font-size: 20px">%</sup></h3>
-                <p>Closed Orders</p>
+                <h3>@Model.CurrentMonthMargin.Amount.ToString("##,##,00")</h3>
+                <p>Margin (@Model.Currency)</p>
             </div>
             <div class="icon">
-                <i class="fa fa-truck"></i>
+                <i class="fa fa-percent"></i>
             </div>
-        </div>
-    </div>
-    <div class="col-lg-3 col-sm-6">
-        <div class="card s-dashboard-card-sm bg-warning bg-opacity-50">
-            <div class="card-body">
-                <h3>@Model.CustomerCount</h3>
-                <p>Total Customers</p>
-            </div>
-            <div class="icon">
-                <i class="fa fa-user-plus"></i>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-3 col-sm-6">
-        <div class="card s-dashboard-card-sm s-alt bg-success bg-opacity-50">
-            <div class="card-body">
-                <h3>@Model.ProductCount</h3>
-                <p>Product Types</p>
-            </div>
-            <div class="icon">
-                <i class="fa fa-tag"></i>
-            </div>
+            <a href="#" class="small-box-footer">#</a>
         </div>
     </div>
 </div>
 
 <div class="row">
-    <section class="col-lg-7">
+    <section class="col-lg-12">
         <div class="card s-dashboard-card">
             <div class="card-body">
                 <ul class="nav nav-tabs" role="tablist">
@@ -163,10 +170,13 @@
                 </div>
             </div>
         </div>
-
+    </section>
+</div>
+<div class="row">
+    <section class="col-lg-6">
         <div class="card s-dashboard-card">
             <div class="card-header d-flex">
-                <h3 class="card-title">Traffic &amp; Origin</h3>
+                <h3 class="card-title">Sales Graph (@Model.Currency)</h3>
             </div>
             <div class="card-body">
                 <canvas id="traffic-chart" style="height: 266px;"></canvas>
@@ -175,22 +185,48 @@
                 <div class="row">
                     <div class="col-4 text-center" style="border-right: 1px solid #f4f4f4">
                         <input type="text" class="knob" data-readonly="true" value="45" data-width="60" data-height="60" data-fgColor="#39a0ff" data-bgColor="#39a0ff50">
-                        <div class="knob-label">Search</div>
+                        <div class="knob-label">KPI1</div>
                     </div>
                     <div class="col-4 text-center" style="border-right: 1px solid #f4f4f4">
                         <input type="text" class="knob" data-readonly="true" value="20" data-width="60" data-height="60" data-fgColor="#39a0ff" data-bgColor="#39a0ff50">
-                        <div class="knob-label">Social</div>
+                        <div class="knob-label">KPI2</div>
                     </div>
                     <div class="col-4 text-center">
                         <input type="text" class="knob" data-readonly="true" value="35" data-width="60" data-height="60" data-fgColor="#39a0ff" data-bgColor="#39a0ff50">
-                        <div class="knob-label">Other</div>
+                        <div class="knob-label">KPI3</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="col-lg-6">
+        <div class="card s-dashboard-card">
+            <div class="card-header d-flex">
+                <h3 class="card-title">Purchase Graph (@Model.Currency)</h3>
+            </div>
+            <div class="card-body">
+                <canvas id="traffic-chart2" style="height: 266px;"></canvas>
+            </div>
+            <div class="card-footer no-border">
+                <div class="row">
+                    <div class="col-4 text-center" style="border-right: 1px solid #f4f4f4">
+                        <input type="text" class="knob" data-readonly="true" value="45" data-width="60" data-height="60" data-fgColor="#39a0ff" data-bgColor="#39a0ff50">
+                        <div class="knob-label">KPI1</div>
+                    </div>
+                    <div class="col-4 text-center" style="border-right: 1px solid #f4f4f4">
+                        <input type="text" class="knob" data-readonly="true" value="20" data-width="60" data-height="60" data-fgColor="#39a0ff" data-bgColor="#39a0ff50">
+                        <div class="knob-label">KPI2</div>
+                    </div>
+                    <div class="col-4 text-center">
+                        <input type="text" class="knob" data-readonly="true" value="35" data-width="60" data-height="60" data-fgColor="#39a0ff" data-bgColor="#39a0ff50">
+                        <div class="knob-label">KPI3</div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="col-lg-5">
+    @* <section class="col-lg-5">
         <div class="card s-dashboard-card bg-world-map">
             <div class="card-header d-flex">
                 <h3 class="card-title text-white">
@@ -262,7 +298,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> *@
 </div>
 
 <script>
@@ -403,6 +439,66 @@
         });
 
         var trafficChart = new Chart(document.getElementById('traffic-chart'), {
+            type: 'bar',
+            data: {
+                labels: Array(37).fill().map(function(x, n) { var d = new Date(); d.setDate(d.getDate() - n); return Q.formatDate(d, 'MMM dd'); }).reverse(),
+                datasets: [
+                    {
+                        label: 'Search',
+                        backgroundColor: "#206bc4", 
+                        barPercentage: 0.7,
+                        data: [1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 2, 12, 5, 8, 22, 6, 8, 6, 4, 1, 8, 24, 29, 51, 40, 47, 23, 26, 50, 26, 41, 22, 46, 47, 81, 46, 6]
+                    },
+                    {
+                        label: 'Social',
+                        backgroundColor: "#79a6dc",
+                        barPercentage: 0.7,
+                        data: [2, 5, 4, 3, 3, 1, 4, 7, 5, 1, 2, 5, 3, 2, 6, 7, 7, 1, 5, 5, 2, 12, 4, 6, 18, 3, 5, 2, 13, 15, 20, 47, 18, 15, 11, 10, 0]
+                    },
+                    {
+                        label: 'Other',
+                        backgroundColor: "#bfe399",
+                        barPercentage: 0.7,
+                        data: [2, 9, 1, 7, 8, 3, 6, 5, 5, 4, 6, 4, 1, 9, 3, 6, 7, 5, 2, 8, 4, 9, 1, 2, 6, 7, 5, 1, 8, 3, 2, 3, 4, 9, 7, 1, 6]
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    x: {
+                        stacked: true,
+                        ticks: {
+                            callback: function(val, index) {
+                                return index % 4 === 0 ? this.getLabelForValue(val) : '';
+                            },
+                            color: 'rgb(140, 142, 150)'
+                        },
+                        grid: {
+                            color: 'rgba(140, 142, 150, 0.15)',
+                            borderDash: [8, 4]
+                        }
+                    },
+                    y: {
+                        stacked: true,
+                        ticks: {
+                            color: 'rgb(140, 142, 150)'
+                        },
+                        grid: {
+                            color: 'rgba(140, 142, 150, 0.15)',
+                            borderDash: [8, 4]
+                        }
+                    }
+                }
+            }
+        });
+        var trafficChart = new Chart(document.getElementById('traffic-chart2'), {
             type: 'bar',
             data: {
                 labels: Array(37).fill().map(function(x, n) { var d = new Date(); d.setDate(d.getDate() - n); return Q.formatDate(d, 'MMM dd'); }).reverse(),
