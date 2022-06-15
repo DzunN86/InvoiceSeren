@@ -198,7 +198,8 @@ html {
 
 .s-sidebar-search-icon {
     position: absolute;
-    left: 0.4em;
+    right: 0.4em;
+    left: 0;
     top: 0.4em;
     font-size: 15px;
 }
