@@ -123,7 +123,7 @@
 
 <div class="row">
     <div class="col-lg-4 col-sm-6">
-        <div class="card s-dashboard-card-sm bg-primary text-white">
+        <div class="card s-dashboard-card-sm bg-primary opacity-75 text-white">
             <div class="card-body">
                 <h3>@Model.CurrentMonthSales.Amount.ToString("##,##,00")</h3>
                 <p>Sales Order (@Model.Currency)</p>
@@ -135,7 +135,7 @@
         </div>
     </div>
     <div class="col-lg-4 col-sm-6">
-        <div class="card s-dashboard-card-sm s-alt bg-info text-white">
+        <div class="card s-dashboard-card-sm s-alt bg-info opacity-75 text-white">
             <div class="card-body">
                 <h3>@Model.CurrentMonthPurchase.Amount.ToString("##,##,00")</h3>
                 <p>Purchase Order (@Model.Currency)</p>
@@ -147,7 +147,7 @@
         </div>
     </div>
     <div class="col-lg-4 col-sm-6">
-        <div class="card s-dashboard-card-sm bg-warning text-white">
+        <div class="card s-dashboard-card-sm bg-warning opacity-75 text-white">
             <div class="card-body">
                 <h3>@Model.CurrentMonthMargin.Amount.ToString("##,##,00")</h3>
                 <p>Margin (@Model.Currency)</p>
@@ -162,7 +162,7 @@
 
 <div class="row">
 	<div class="col-lg-6">
-		<div class="small-box text-center bg-G-purple">
+		<div class="small-box text-center bg-G-purple opacity-75">
 			<div class="inner">
 				<input type="text" class="knob" data-readonly="true" value="@Model.CurrentMonthSalesTransaction" data-width="200" data-height="200" data-fgColor="#ffffff" data-linecap="round" data-bgColor="rgba(66, 20, 62, 0.46)">
 			</div>
@@ -173,7 +173,7 @@
 		</div>
 	</div>
 	<div class="col-lg-6">
-		<div class="small-box text-center bg-G-orange">
+		<div class="small-box text-center bg-G-orange opacity-75">
 			<div class="inner">
 				<input type="text" class="knob" data-readonly="true" value="@Model.CurrentMonthPurchaseTransaction" data-width="200" data-height="200" data-fgColor="#ffffff" data-linecap="round" data-bgColor="rgba(66, 20, 62, 0.46)">
 			</div>
@@ -186,7 +186,7 @@
 </div>
 <div class="row">
     <section class="col-lg-6">
-        <div class="card s-dashboard-card bg-success">
+        <div class="card s-dashboard-card bg-success opacity-75">
             <div class="card-header d-flex">
                 <h3 class="card-title text-white">Sales Graph (@Model.Currency)</h3>
             </div>
@@ -213,7 +213,7 @@
         </div>
     </section>
     <section class="col-lg-6">
-        <div class="card s-dashboard-card bg-primary">
+        <div class="card s-dashboard-card bg-primary opacity-75">
             <div class="card-header d-flex">
                 <h3 class="card-title text-white">Purchase Graph (@Model.Currency)</h3>
             </div>
